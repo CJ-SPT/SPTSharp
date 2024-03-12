@@ -1,6 +1,7 @@
 ﻿using SPTSharp.Controllers;
 using SPTSharp.Helpers;
 using SPTSharp.Server;
+using System.Diagnostics;
 
 namespace SPTSharp
 {
@@ -8,10 +9,16 @@ namespace SPTSharp
     {
         public static void Main(string[] args)
         {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             SingletonFactory();
 
             var server = new HttpServerRunner();
             server.StartHttpServer();
+
+            stopwatch.Stop();
+            Logger.LogInfo($"Startup took {stopwatch.ElapsedMilliseconds} milliseconds");
 
             while (true)
             {
@@ -33,17 +40,16 @@ namespace SPTSharp
 
         public static void SingletonFactory()
         {
-            Logger.LogInfo("Running singleton factory...");
-
+            // Controllers
             Singleton<ConfigController>.Instance = new ConfigController();
-            Logger.LogDebug("Configs Loaded.");
+            Singleton<LauncherController>.Instance = new LauncherController();
+            Singleton<ProfileController>.Instance = new ProfileController();
 
             Singleton<DatabaseController>.Instance = new DatabaseController();
             Singleton<DatabaseController>.Instance.InitDatabase();
             Logger.LogDebug("Database loaded");
 
-            Singleton<LauncherController>.Instance = new LauncherController();
-            Singleton<ProfileController>.Instance = new ProfileController();
+            // Servers
             Singleton<SaveServer>.Instance = new SaveServer();
         }
     }

@@ -1,12 +1,6 @@
 ﻿using SPTSharp.CallBacks;
 using SPTSharp.Helpers;
-using System.IO.Compression;
-using System.IO;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
 using NetCoreServer;
-
 
 namespace SPTSharp.Routers
 {
@@ -34,6 +28,11 @@ namespace SPTSharp.Routers
             byte[] bytes = HttpServerHelper.CompressString(content);
             var resp = response.MakeGetResponse(bytes);
             session.SendResponseAsync(resp);
+        }
+
+        public static void HandleProfiles(HttpSession session, HttpRequest request, HttpResponse response)
+        {
+
         }
     }
 }

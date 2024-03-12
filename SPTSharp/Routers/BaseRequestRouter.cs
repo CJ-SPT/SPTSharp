@@ -10,7 +10,8 @@ namespace SPTSharp.Routers
             {
                 { "/launcher/server/connect",   LauncherRouter.HandleConnect },
                 { "/launcher/ping" ,            LauncherRouter.HandlePing },
-                { "/launcher/server/version",   LauncherRouter.HandleVersion }
+                { "/launcher/server/version",   LauncherRouter.HandleVersion },
+                { "/launcher/profiles",         LauncherRouter.HandleProfiles }  
             };
 
         public static void RouteRequest(HttpSession session, HttpRequest request, HttpResponse response)
@@ -24,10 +25,16 @@ namespace SPTSharp.Routers
                 return;
             }
 
+            if (url.EndsWith(".png") || url.EndsWith(".jpg"))
+            {
+                RouteImages(session, request, response);
+                return;
+            }
+
             Logger.LogError($"UNHANDLED: {url}");
         }
 
-        public static void RouteFiles(HttpSession session, HttpRequest request, HttpResponse response)
+        public static void RouteImages(HttpSession session, HttpRequest request, HttpResponse response)
         {
             var url = request.Url;
 

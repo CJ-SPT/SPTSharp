@@ -13,7 +13,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public Upd upd { get; set; }
 
         // TODO: this needs to be a number as well, wtf?
-        public Location location { get; set; }
+        public dynamic location { get; set; }
     }
 
     public class Upd
