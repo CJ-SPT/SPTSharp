@@ -13,10 +13,10 @@ namespace SPTSharp.Controllers
                 backendUrl = HttpServerHelper.GetBackendUrl(),
                 name = Singleton<ConfigController>.Instance.core.serverName,
                 editions = DatabaseHelpers.GetProfileEditions(),
-                //profileDescriptions = GetProfileDescriptions()
+                profileDescriptions = GetProfileDescriptions()
             };
         }
-        /*
+        
         // Get descriptive text for each of the profile editions a player can choose,
         // keyed by profile.json profile type e.g. "Edge Of Darkness"
         private Dictionary<string, string> GetProfileDescriptions()
@@ -39,6 +39,6 @@ namespace SPTSharp.Controllers
             }
 
             return result;
-        }*/
+        }
     }
 }

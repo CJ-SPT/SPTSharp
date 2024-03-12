@@ -3,12 +3,7 @@ using SPTSharp.Models.Eft.Common.Tables;
 using SPTSharp.Models.Spt.Server;
 using SPTSharp.Routers;
 using SPTSharp.Services;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace SPTSharp.Controllers
 {
@@ -31,16 +26,17 @@ namespace SPTSharp.Controllers
             Tables.Locales.Server = FileIOHelper.LoadLocaleData([basePath, "Server", "Database", "locales", "server"]);
             //Tables.Locale.Menu = FileIOHelper.LoadLocaleData([basePath, "Server", "Database", "locales", "menu"]); //FIXME
 
-            //Tables.templates.profiles = FileIOHelper.LoadJson<Profiles>([basePath, "Server", "Database", "templates", "profiles.json"]);
+            Tables.templates.profiles = FileIOHelper.LoadJson<ProfileTemplates>([basePath, "Server", "Database", "templates", "profiles.json"]);
 
             Logger.LogDebug("Loading json from disk complete...");
         }
 
         public void InitDatabase()
         {
-            //BuildProfileDict();
+            BuildProfileDict();
+            LoadImages();
         }
-        /*
+        
         private void BuildProfileDict()
         {
             Logger.LogDebug("Building profile dictionary...");
@@ -51,11 +47,12 @@ namespace SPTSharp.Controllers
             profiles.ProfileSideDict.Add("Prepare To Escape", profiles.PrepareToEscape);
             profiles.ProfileSideDict.Add("SPT Developer", profiles.SPTDeveloper);
             profiles.ProfileSideDict.Add("SPT Easy start", profiles.SPTEasystart);
-            profiles.ProfileSideDict.Add("SPT Zero to hero", profiles.SPTZerotohero);
-
-            LoadImages();
+            profiles.ProfileSideDict.Add("SPT Zero to hero", profiles.SPTZerotohero);         
         }
-        */
+        
+        /***
+         * Map file routes to their respective location on disk
+         */
         private void LoadImages()
         {
             var filePath = Path.Combine([FileIOHelper.basePath, "server", "images"]);
