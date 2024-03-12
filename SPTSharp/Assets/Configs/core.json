@@ -1,0 +1,7 @@
+{
+  "version": "3.8.0",
+  "projectName": "SPTSharp",
+  "compatibleTarkovVersion": "0.14.1.28965",
+  "serverName": "SPTSharp Server",
+  "logLevel": "ALL"
+}

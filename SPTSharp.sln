@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34525.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SPTSharp", "SPTSharp\SPTSharp.csproj", "{CAA1B22F-E565-4C29-B415-53F115203336}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		BLEEDING_EDGE|Any CPU = BLEEDING_EDGE|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CAA1B22F-E565-4C29-B415-53F115203336}.BLEEDING_EDGE|Any CPU.ActiveCfg = BLEEDING_EDGE|Any CPU
+		{CAA1B22F-E565-4C29-B415-53F115203336}.BLEEDING_EDGE|Any CPU.Build.0 = BLEEDING_EDGE|Any CPU
+		{CAA1B22F-E565-4C29-B415-53F115203336}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAA1B22F-E565-4C29-B415-53F115203336}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAA1B22F-E565-4C29-B415-53F115203336}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAA1B22F-E565-4C29-B415-53F115203336}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5B34AE90-8139-4B85-98C0-F15A9726F44A}
+	EndGlobalSection
+EndGlobal

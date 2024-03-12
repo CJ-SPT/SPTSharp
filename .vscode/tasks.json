@@ -1,0 +1,25 @@
+{  
+    "version": "2.0.0",  
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": "$tsc"
+        },
+        {
+            "type": "dotnet",
+            "task": "build G:\\development\\SPTSharp\\SPTSharp\\SPTSharp\\SPTSharp.csproj",
+            "file": "G:\\development\\SPTSharp\\SPTSharp\\SPTSharp\\SPTSharp.csproj",
+            "group": "build",
+            "problemMatcher": [],
+            "label": "dotnet: build G:\\development\\SPTSharp\\SPTSharp\\SPTSharp\\SPTSharp.csproj"
+        }
+    ]  
+}  
