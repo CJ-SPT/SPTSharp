@@ -27,7 +27,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public Dictionary<string, TaskConditionCounter> TaskConditionCounters { get; set; }
         public InsuredItem[] InsuredItems { get; set; }
         public Hideout Hideout { get; set; }
-        public QuestStatus Quests { get; set; }
+        public QuestStatus[] Quests { get; set; }
         public Dictionary<string, TraderInfo> TradersInfo { get; set; }
         public UnlockedInfo UnlockedInfo { get; set; }
         public RagfairInfo RagfairInfo { get; set; }
@@ -72,7 +72,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public string Voice { get; set; }
         public int Level { get; set; }
         public int Experience { get; set; }
-        public int RegistrationDate { get; set; }
+        public dynamic RegistrationDate { get; set; }
         public string GameVersion { get; set; }
         public int AcountType { get; set; }
         public EMemberCategory MemberCategory { get; set; }
@@ -159,8 +159,8 @@ namespace SPTSharp.Models.Eft.Common.Tables
 
     public class CurrentMax
     {
-        public int Current { get; set; }
-        public int Maximum { get; set; }
+        public float Current { get; set; }
+        public float Maximum { get; set; }
     }
 
     public class Inventory
@@ -294,7 +294,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
     {
         public string LethalDamagePart { get; set; }
         public LethalDamage LethalDamage { get; set; }
-        public BodyPartsDamageHistory BodyParts { get; set; }
+        public BodyPartsDamageHistory[] BodyParts { get; set; }
     }
 
     public class LethalDamage
