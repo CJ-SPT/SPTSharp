@@ -1,4 +1,5 @@
 ﻿using SPTSharp.Helpers;
+using SPTSharp.Models.Eft.Common;
 using SPTSharp.Models.Eft.Common.Tables;
 using SPTSharp.Models.Spt.Server;
 using SPTSharp.Routers;
@@ -27,6 +28,7 @@ namespace SPTSharp.Controllers
             //Tables.Locale.Menu = FileIOHelper.LoadLocaleData([basePath, "Server", "Database", "locales", "menu"]); //FIXME
 
             Tables.templates.profiles = FileIOHelper.LoadJson<ProfileTemplates>([basePath, "Server", "Database", "templates", "profiles.json"]);
+            Tables.globals = FileIOHelper.LoadJson<Globals>([basePath, "server", "Database", "globals.json"]);
 
             Logger.LogDebug("Loading json from disk complete...");
         }

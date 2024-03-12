@@ -1,4 +1,5 @@
-﻿using SPTSharp.Models.Eft.Common.Tables;
+﻿using SPTSharp.Models.Eft.Common;
+using SPTSharp.Models.Eft.Common.Tables;
 
 namespace SPTSharp.Models.Spt.Server
 {
@@ -9,7 +10,8 @@ namespace SPTSharp.Models.Spt.Server
         public LocaleBase Locales { get; set; } = new LocaleBase();
 
         public Templates templates = new Templates();
-
+        
+        public Globals globals = new Globals();
     }
 
     public class Templates
@@ -23,6 +25,6 @@ namespace SPTSharp.Models.Spt.Server
         public ProfileTemplates profiles = new ProfileTemplates();
         public Dictionary<string, float> prices = new Dictionary<string, float>();
         //public SDefaultEquipmentPresets[] defaultEquipmentPresets;
-        //public SAchievement[] achievements;
+        //public SAchievement[] achievements; 
     }
 }
