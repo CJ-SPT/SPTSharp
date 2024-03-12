@@ -9,10 +9,41 @@ namespace SPTSharp.Models.Eft.Common.Tables
     public class BotBase
     {
         public string _id { get; set; }
-        public int aid { get; set; }
-        public string sessionId { get; set; }
-        public string savage { get; set; }
+        
+        // Starts as a string, but is an int when saved.
+        // When loaded from templates its value is __REPLACEME__
+        public dynamic aid { get; set; }
 
+        /** SPT property - use to store player id - TODO - move to AID ( account id as guid of choice) */
+        public string sessionId { get; set; }
+        public string? savage { get; set; }
+        public Info Info { get; set; }
+        public Customization Customization { get; set; }
+        public Health Health { get; set; }
+        public Inventory Inventory { get; set; }
+        public Skills Skills { get; set; }
+        public Stats Stats { get; set; }
+        public Dictionary<string, bool> Encyclopedia { get; set; }
+        public Dictionary<string, TaskConditionCounter> TaskConditionCounters { get; set; }
+        public InsuredItem[] InsuredItems { get; set; }
+        public Hideout Hideout { get; set; }
+        public QuestStatus Quests { get; set; }
+        public Dictionary<string, TraderInfo> TradersInfo { get; set; }
+        public UnlockedInfo UnlockedInfo { get; set; }
+        public RagfairInfo RagfairInfo { get; set; }
+
+        /** Achievement id and timestamp */
+        public Dictionary<string, int> Achievements { get; set; }
+        public PmcDataRepeatableQuest[] RepeatableQuests { get; set; }
+        public Bonus[] Bonuses { get; set; }
+        public Notes Notes { get; set; }
+        public Dictionary<string, int> CarExtractCounts { get; set; }
+        public Dictionary<string, int> CoopExtractCounts { get; set; }
+        public SurvivorClass SurvivorClass { get; set; }
+        public string[] WishList { get; set; }
+
+        /** SPT specific property used during bot generation in raid */
+        public bool? sptIsPmc { get; set; }
     }
 
     public class TaskConditionCounter

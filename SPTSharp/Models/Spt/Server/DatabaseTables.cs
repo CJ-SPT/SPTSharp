@@ -20,7 +20,7 @@ namespace SPTSharp.Models.Spt.Server
         //public SRepeatableQuestDatabase;
         //public SHandbookBase handbook;
         //public Dictionary<string, SCustomizationItem> customization;
-        //public Profiles profiles = new Profiles();
+        public ProfileTemplates profiles = new ProfileTemplates();
         public Dictionary<string, float> prices = new Dictionary<string, float>();
         //public SDefaultEquipmentPresets[] defaultEquipmentPresets;
         //public SAchievement[] achievements;
