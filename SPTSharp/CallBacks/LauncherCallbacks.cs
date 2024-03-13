@@ -11,7 +11,7 @@ using NetCoreServer;
 
 namespace SPTSharp.CallBacks
 {
-    public static class LauncherCallbacks
+    internal static class LauncherCallbacks
     {
         private static LauncherController _launcherController => Singleton<LauncherController>.Instance;
         private static ProfileController _profileController => Singleton<ProfileController>.Instance;

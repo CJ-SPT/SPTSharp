@@ -6,7 +6,7 @@ using SPTSharp.Utils;
 
 namespace SPTSharp.CallBacks
 {
-    public static class DataCallbacks
+    internal static class DataCallbacks
     {
         private static DatabaseTables _tables => Singleton<DatabaseController>.Instance.GetTables();
 

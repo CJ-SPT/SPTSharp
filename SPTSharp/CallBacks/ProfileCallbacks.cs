@@ -4,7 +4,7 @@ using SPTSharp.Utils;
 
 namespace SPTSharp.CallBacks
 {
-    public static class ProfileCallbacks
+    internal static class ProfileCallbacks
     {
         private static ProfileController _controller => Singleton<ProfileController>.Instance;
 
