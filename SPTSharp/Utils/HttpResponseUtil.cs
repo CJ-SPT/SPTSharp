@@ -1,31 +1,50 @@
-﻿namespace SPTSharp.Utils
+﻿using Newtonsoft.Json;
+using SPTSharp.Models.Eft.HttpResponse;
+using System.Text.RegularExpressions;
+
+#pragma warning disable
+
+namespace SPTSharp.Utils
 {
     public static class HttpResponseUtil
     {
-        // Returns passed in data as JSON string
+        public static string ClearString(string s)
+        {
+            return s.Replace("\b", "").Replace("\f", "").Replace("\n", "").Replace("\r", "").Replace("\t", "");
+        }
+
+        /**
+         * Return passed-in data as JSON string
+         * @param data
+         * @returns
+         */
         public static string NoBody(object data)
         {
-            return ClearString(JsonUtil.Serialize(data));
+            return ClearString(JsonConvert.SerializeObject(data));
         }
 
-        public static string getUnclearedBody(object data, int err = 0, object? errMsg = null)
+        /**
+         * Game client needs server responses in a particular format
+         * @param data
+         * @param err
+         * @param errmsg
+         * @returns
+         */
+        public static string GetBody(object data, int err = 0, string errmsg = null, bool sanitize = true)
         {
-            return JsonUtil.Serialize(new object[] { err, errMsg, data });
+            return sanitize
+                ? JsonConvert.SerializeObject(new GetBodyResponseData<object> { err = err, errmsg = errmsg, data = data })
+                : GetUnclearedBody(data, err, errmsg);
         }
 
-        // Clears the string of all escape characters
-        private static string ClearString(string s)
+        public static string GetUnclearedBody(object data, int err = 0, string errmsg = null)
         {
-            if (s == null)
-            {
-                return null;
-            }
+            return JsonConvert.SerializeObject(new { err = err, errmsg = errmsg, data = data });
+        }
 
-            return s.Replace("\b", "")
-                    .Replace("\f", "")
-                    .Replace("\n", "")
-                    .Replace("\r", "")
-                    .Replace("\t", "");
+        public static string EmptyResponse()
+        {
+            return GetBody("");
         }
     }
 }

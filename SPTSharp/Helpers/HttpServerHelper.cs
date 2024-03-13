@@ -49,22 +49,10 @@ namespace SPTSharp.Helpers
             return $"ws://{BuildUrl()}";
         }
 
-        // Compress string into a byte array
-        public static byte[] CompressString(string data)
+        // Compress using Zlib
+        public static byte[] CompressStringZlib(string data)
         {
             return SimpleZlib.CompressToBytes(data, zlibConst.Z_BEST_COMPRESSION);
-        }
-
-        // Compress byte data
-        public static byte[] CompressBytes(byte[] data)
-        {
-            return SimpleZlib.CompressToBytes(data, zlibConst.Z_BEST_COMPRESSION);
-        }
-
-        // Decompress string data
-        public static string DecompressString(string data)
-        {
-            return SimpleZlib.Decompress(data);
         }
 
         public static string DecompressZlibToJSON(byte[] compressedBytes)
@@ -75,6 +63,35 @@ namespace SPTSharp.Helpers
             {
                 // Read the decompressed data and convert it to a JSON string
                 return reader.ReadToEnd();
+            }
+        }
+
+        static byte[] CompressStringGzipGZip(string text)
+        {
+            byte[] buffer = Encoding.UTF8.GetBytes(text);
+
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                using (GZipStream gzipStream = new GZipStream(memoryStream, CompressionMode.Compress, true))
+                {
+                    gzipStream.Write(buffer, 0, buffer.Length);
+                }
+
+                return memoryStream.ToArray();
+            }
+        }
+
+        static string DecompressBytesGZip(byte[] compressedBytes)
+        {
+            using (MemoryStream memoryStream = new MemoryStream(compressedBytes))
+            {
+                using (GZipStream gzipStream = new GZipStream(memoryStream, CompressionMode.Decompress))
+                {
+                    using (StreamReader reader = new StreamReader(gzipStream))
+                    {
+                        return reader.ReadToEnd();
+                    }
+                }
             }
         }
     }

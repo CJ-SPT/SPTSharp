@@ -79,14 +79,11 @@ namespace SPTSharp.Controllers
                 edition = data.edition
             };
 
-            // If creation was successful, we want to save it to disk
-            if (_saveServer.CreateProfile(info))
-            {
-                _saveServer.SaveProfile(profileId);
-                return profileId;
-            }
+            _saveServer.CreateProfile(info);
+            _saveServer.LoadProfile(profileId);
+            _saveServer.SaveProfile(profileId);
 
-            return string.Empty;
+            return profileId;
         }
 
         private string GenerateProfileId()

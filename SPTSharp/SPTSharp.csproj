@@ -30,6 +30,10 @@
     <Folder Include="Context\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="xcopy /Y /S /I &quot;$(ProjectDir)Assets\*.*&quot; &quot;$(TargetDir)Aki_data\Server&quot;" />
   </Target>

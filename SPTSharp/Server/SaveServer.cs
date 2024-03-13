@@ -10,9 +10,9 @@ namespace SPTSharp.Server
         private Dictionary<string, AkiProfile> _profiles = new Dictionary<string, AkiProfile>();
 
         // Get a profile by sessionId from the save server
-        public AkiProfile GetProfile(string sessionId)
+        public AkiProfile GetProfile(string sessionID)
         {
-            if (sessionId == null)
+            if (sessionID == null)
             {
                 throw new ArgumentException("session ID provided was null, did you restart the server while the game was running?");
             }
@@ -22,7 +22,7 @@ namespace SPTSharp.Server
                 throw new NullReferenceException("`_profiles` is null, this shouldn't happen");
             }
 
-            return _profiles[sessionId];
+            return _profiles[sessionID];
         }
 
         // Get all profiles from memory
@@ -52,43 +52,63 @@ namespace SPTSharp.Server
 
         // Loads a profile by sessionId from disk
         // returns true on success, false on failure
-        public bool LoadProfile(string sessionId)
+        public bool LoadProfile(string sessionID)
         {
             Stopwatch stopwatch = new Stopwatch();
-            var filename = $"{sessionId}.json";
+            var filename = $"{sessionID}.json";
             var filePath = Path.Combine(_profileFilePath, filename);
 
             if (File.Exists(filePath))
             {
                 // Store profile on disk in memory             
                 stopwatch.Start();
-                _profiles[sessionId] = FileIOHelper.LoadJson<AkiProfile>([filePath]);
+                _profiles[sessionID] = FileIOHelper.LoadJson<AkiProfile>([filePath]);
                 stopwatch.Stop();
                 
-                Logger.LogDebug($"Profile {sessionId} took: {stopwatch.ElapsedMilliseconds} ms to load.");
+                Logger.LogDebug($"Profile {sessionID} took: {stopwatch.ElapsedMilliseconds} ms to load.");
                 return true;
             }
 
             return false;
         }
 
-        public void SaveProfile(string sessionId)
+        public void SaveProfile(string sessionID)
         {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            var filename = $"{sessionId}.json";
+            var filename = $"{sessionID}.json";
             var filePath = Path.Combine(_profileFilePath, filename);
 
-            if (_profiles.ContainsKey(sessionId))
+            if (_profiles.ContainsKey(sessionID))
             {
-                FileIOHelper.SaveJson([filePath], _profiles[sessionId]);
+                FileIOHelper.SaveJson([filePath], _profiles[sessionID]);
 
                 stopwatch.Stop();
-                Logger.LogDebug($"Profile {sessionId} took {stopwatch.ElapsedMilliseconds} ms to save.");
+                Logger.LogDebug($"Profile {sessionID} took {stopwatch.ElapsedMilliseconds} ms to save.");
                 return;
             }
 
-            Logger.LogError($"No profile exists in memory with sessionId {sessionId}");
+            Logger.LogError($"No profile exists in memory with sessionId {sessionID}");
+        }
+        
+        // remove the profile in memory and on disk
+        public bool RemoveProfile(string sessionID) 
+        {
+            var filename = $"{sessionID}.json";
+            var filePath = Path.Combine(_profileFilePath, filename);
+
+            if (!_profiles.ContainsKey(sessionID))
+            {
+                _profiles.Remove(sessionID);
+            }
+
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+
+            Logger.LogInfo($"Profile: {sessionID} removed.");
+            return !File.Exists(filePath);
         }
     }
 }

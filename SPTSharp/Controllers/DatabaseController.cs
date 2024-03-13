@@ -34,7 +34,7 @@ namespace SPTSharp.Controllers
             // Locale data
             _tables.Locales.Global = FileIOHelper.LoadLocaleData([dataPath, "Server", "Database", "locales", "global"]);
             _tables.Locales.Server = FileIOHelper.LoadLocaleData([dataPath, "Server", "Database", "locales", "server"]);
-            //Tables.Locale.Menu = FileIOHelper.LoadLocaleData([basePath, "Server", "Database", "locales", "menu"]); //FIXME
+            _tables.Locales.Menu = FileIOHelper.LoadLocaleData([dataPath, "Server", "Database", "locales", "menu"]); 
 
             _tables.templates.profiles = FileIOHelper.LoadJson<ProfileTemplates>([dataPath, "Server", "Database", "templates", "profiles.json"]);
             _tables.globals = FileIOHelper.LoadJson<Globals>([dataPath, "server", "Database", "globals.json"]);

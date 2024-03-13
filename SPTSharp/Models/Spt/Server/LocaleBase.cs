@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿#pragma warning disable
 
 namespace SPTSharp.Models.Spt.Server
 {
@@ -12,10 +8,10 @@ namespace SPTSharp.Models.Spt.Server
         public LocaleBase() { }
 
         public Dictionary<string, Dictionary<string, string>> Global = new Dictionary<string, Dictionary<string, string>>();
-        
-        public Dictionary<string, Dictionary<string, string>> Menu = new Dictionary<string, Dictionary<string, string>>();
-        
+
         public Dictionary<string, Dictionary<string, string>> Server = new Dictionary<string, Dictionary<string, string>>();
+
+        public Dictionary<string, Dictionary<string, string>> Menu = new Dictionary<string, Dictionary<string, string>>();
         
         public Dictionary<string, string> Languages = new Dictionary<string, string>();      
     }

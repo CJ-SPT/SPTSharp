@@ -1,29 +1,41 @@
 ﻿using NetCoreServer;
+using SPTSharp.CallBacks;
 using SPTSharp.Helpers;
 
 namespace SPTSharp.Routers
 {
     public static class BaseRequestRouter
     {
+        public static string sessionID = string.Empty;
+
         private static readonly Dictionary<string, Action<HttpSession, HttpRequest, HttpResponse, string>> _getRoutes =
             new Dictionary<string, Action<HttpSession, HttpRequest, HttpResponse, string>>
             {
-                { "/launcher/server/connect",                   LauncherRouter.HandleConnect                },
-                { "/launcher/ping" ,                            LauncherRouter.HandlePing                   },
-                { "/launcher/server/version",                   LauncherRouter.HandleVersion                },
-                { "/launcher/profiles",                         LauncherRouter.HandleGetAllMiniProfiles     },
-                { "/launcher/server/loadedServerMods",          LauncherRouter.HandleGetLoadedServerMods    },
-                { "/launcher/server/serverModsUsedByProfile",   LauncherRouter.HandleGetModsUsedByProfile   }
+                { "/launcher/server/connect",                   LauncherCallbacks.Connect                   },
+                { "/launcher/ping" ,                            LauncherCallbacks.Ping                      },
+                { "/launcher/server/version",                   LauncherCallbacks.GetVersion                },
+                { "/launcher/profiles",                         LauncherCallbacks.GetAllMiniProfiles        },
+                { "/launcher/server/loadedServerMods",          LauncherCallbacks.GetServerMods             },
+                { "/launcher/server/serverModsUsedByProfile",   LauncherCallbacks.GetProfileMods            },
+                { "/singleplayer/bundles",                      BundleCallbacks.GetBundles                  },
+                { "/singleplayer/settings/version",             GameCallbacks.GetVersion                    }
             };
 
         private static readonly Dictionary<string, Action<HttpSession, HttpRequest, HttpResponse, string>> _postRoutes =
             new Dictionary<string, Action<HttpSession, HttpRequest, HttpResponse, string>>
             {
-                { "/launcher/profile/login",    LauncherRouter.HandleLogin              },
-                { "/launcher/profile/register", LauncherRouter.HandleRegister           },
-                { "/launcher/profile/get",      LauncherRouter.HandleGetProfile         },
-                { "/launcher/profile/info",     LauncherRouter.HandleGetProfileInfo     },
-                { "/launcher/profile/remove",   LauncherRouter.HandleRemoveProfile      }
+                { "/launcher/profile/login",    LauncherCallbacks.Login              },
+                { "/launcher/profile/register", LauncherCallbacks.Register           },
+                { "/launcher/profile/get",      LauncherCallbacks.GetProfile         },
+                { "/launcher/profile/info",     LauncherCallbacks.GetProfileInfo     },
+                { "/launcher/profile/remove",   LauncherCallbacks.RemoveProfile      },
+                { "/client/game/start",         GameCallbacks.GameStart              }   
+            };
+
+        private static readonly Dictionary<string, Action<HttpSession, HttpRequest, HttpResponse, string>> _dynamicRoutes =
+            new Dictionary<string, Action<HttpSession, HttpRequest, HttpResponse, string>>
+            {
+                //{ "/client/menu/locale/",    LauncherRouter.HandleLogin              },
             };
 
         public static void RouteRequest(HttpSession session, HttpRequest request, HttpResponse response)
@@ -32,7 +44,6 @@ namespace SPTSharp.Routers
 
             // Extract the SessionID from the header
             var cookies = GetCookies(request);
-            string sessionID = string.Empty;
             
             foreach (var cookie in cookies)
             {
@@ -63,10 +74,40 @@ namespace SPTSharp.Routers
                 return;
             }
 
+            if (RouteDynamic(session, request, response, sessionID))
+            {
+                return;
+            }
+
             Logger.LogError($"UNHANDLED: {url}");
         }
 
-        public static void RouteImages(HttpSession session, HttpRequest request, HttpResponse response)
+        public static void CompressAndSend(HttpSession session, HttpRequest request, HttpResponse response, string content)
+        {
+            Logger.LogDebug($"Response: \n{content}\n");
+            byte[] bytes = HttpServerHelper.CompressStringZlib(content);
+            var resp = response.MakeGetResponse(bytes);
+
+            session.SendResponseAsync(resp);
+        }
+
+        private static bool RouteDynamic(HttpSession session, HttpRequest request, HttpResponse response, string SessionID)
+        {
+            var url = request.Url;
+
+            var routeKey = _dynamicRoutes.Keys
+                .FirstOrDefault(key => url.Contains(key, StringComparison.OrdinalIgnoreCase));
+
+            if (routeKey.Any())
+            {
+                _dynamicRoutes[routeKey].Invoke(session, request, response, sessionID);
+                return true;
+            }
+
+            return false;
+        }
+
+        private static void RouteImages(HttpSession session, HttpRequest request, HttpResponse response)
         {
             var url = request.Url;
 
@@ -85,7 +126,6 @@ namespace SPTSharp.Routers
             for (int i = 0; i < headerCount; i++)
             {
                 cookies[request.Header(i).Item1] = request.Header(i).Item2;
-                Logger.LogDebug($"\nCookie {i}\nKey: {request.Header(i).Item1}\nValue: {request.Header(i).Item2}\n");
             }
 
             return cookies;

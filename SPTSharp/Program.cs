@@ -1,5 +1,6 @@
 ﻿using SPTSharp.Controllers;
 using SPTSharp.Helpers;
+using SPTSharp.Loaders;
 using SPTSharp.Server;
 using System.Diagnostics;
 
@@ -44,6 +45,7 @@ namespace SPTSharp
             Singleton<ConfigController>.Instance = new ConfigController();
             Singleton<LauncherController>.Instance = new LauncherController();
             Singleton<ProfileController>.Instance = new ProfileController();
+            Singleton<BundleLoader>.Instance = new BundleLoader();
 
             Singleton<DatabaseController>.Instance = new DatabaseController();
             Singleton<DatabaseController>.Instance.InitDatabase();
