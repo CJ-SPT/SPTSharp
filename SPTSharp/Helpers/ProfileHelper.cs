@@ -1,6 +1,9 @@
 ﻿using SPTSharp.Controllers;
+using SPTSharp.Models.Eft.Common;
 using SPTSharp.Models.Eft.Launcher;
+using SPTSharp.Models.Eft.Profile;
 using SPTSharp.Models.Spt.Server;
+using SPTSharp.Server;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +15,7 @@ namespace SPTSharp.Helpers
     public static class ProfileHelper
     {
         private static DatabaseTables _tables => Singleton<DatabaseController>.Instance.GetTables();
+        private static SaveServer _saveServer => Singleton<SaveServer>.Instance;
 
         // Gets the experience for a given level
         public static int GetExperience(int level)
@@ -51,6 +55,40 @@ namespace SPTSharp.Helpers
         public static string GetServerVersion()
         {
             return WatermarkUtil.GetVersionTag(true);
+        }
+
+        public static AkiProfile? GetFullProfile(string sessionID)
+        {
+            if (_saveServer.GetProfile(sessionID) == null)
+            {
+                return null;
+            }
+
+            return _saveServer.GetProfile(sessionID);
+        }
+
+        public static PmcData? GetPmcProfile(string sessionID)
+        {
+            var fullProfile = GetFullProfile(sessionID);
+
+            if (fullProfile == null || fullProfile.characters.pmc == null)
+            {
+                return null;
+            }
+
+            return fullProfile.characters.pmc;
+        }
+
+        public static PmcData? GetScavProfile(string sessionID) 
+        {
+            var fullProfile = GetFullProfile(sessionID);
+
+            if (fullProfile == null || fullProfile.characters.scav == null)
+            {
+                return null;
+            }
+
+            return fullProfile.characters.scav;
         }
     }
 }

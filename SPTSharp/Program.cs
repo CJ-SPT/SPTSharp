@@ -46,6 +46,7 @@ namespace SPTSharp
             Singleton<LauncherController>.Instance = new LauncherController();
             Singleton<ProfileController>.Instance = new ProfileController();
             Singleton<BundleLoader>.Instance = new BundleLoader();
+            Singleton<GameController>.Instance = new GameController();
 
             Singleton<DatabaseController>.Instance = new DatabaseController();
             Singleton<DatabaseController>.Instance.InitDatabase();

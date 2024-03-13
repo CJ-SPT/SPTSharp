@@ -46,5 +46,10 @@ namespace SPTSharp.Utils
         {
             return GetBody("");
         }
+
+        public static string NullResponse()
+        {
+            return ClearString(GetUnclearedBody(null, 0, null));
+        }
     }
 }

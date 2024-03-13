@@ -33,7 +33,7 @@ namespace SPTSharp.Server
 
         // Creates a empty profile
         // Returns true if on success, false on failure.
-        public bool CreateProfile(Models.Eft.Profile.Info profileInfo)
+        public bool CreateProfile(Info profileInfo)
         {
             if (_profiles.ContainsKey(profileInfo.id))
             {

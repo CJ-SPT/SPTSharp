@@ -4,6 +4,7 @@ using SPTSharp.Models.Eft.Common.Tables;
 using SPTSharp.Models.Spt.Server;
 using SPTSharp.Routers;
 using SPTSharp.Services;
+using System.Globalization;
 
 
 namespace SPTSharp.Controllers
@@ -34,7 +35,16 @@ namespace SPTSharp.Controllers
             // Locale data
             _tables.Locales.Global = FileIOHelper.LoadLocaleData([dataPath, "Server", "Database", "locales", "global"]);
             _tables.Locales.Server = FileIOHelper.LoadLocaleData([dataPath, "Server", "Database", "locales", "server"]);
-            _tables.Locales.Menu = FileIOHelper.LoadLocaleData([dataPath, "Server", "Database", "locales", "menu"]); 
+            _tables.Locales.Menu = FileIOHelper.LoadLocaleData([dataPath, "Server", "Database", "locales", "menu"]);
+
+            _tables.templates.items = FileIOHelper.LoadJson<Dictionary<string, TemplateItem>>([dataPath, "server", "Database", "templates", "items.json"]);
+
+            Logger.LogDebug($"Loaded {_tables.templates.items.Count} items");
+
+            foreach (var item in _tables.templates.items)
+            {
+                Logger.LogDebug(item.Value._name);
+            }
 
             _tables.templates.profiles = FileIOHelper.LoadJson<ProfileTemplates>([dataPath, "Server", "Database", "templates", "profiles.json"]);
             _tables.globals = FileIOHelper.LoadJson<Globals>([dataPath, "server", "Database", "globals.json"]);
@@ -58,7 +68,7 @@ namespace SPTSharp.Controllers
             profiles.ProfileSideDict.Add("SPT Easy start", profiles.SPTEasystart);
             profiles.ProfileSideDict.Add("SPT Zero to hero", profiles.SPTZerotohero);         
         }
-        
+
         /***
          * Map file routes to their respective location on disk
          */

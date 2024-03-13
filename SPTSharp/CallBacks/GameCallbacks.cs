@@ -1,4 +1,5 @@
 ﻿using NetCoreServer;
+using SPTSharp.Controllers;
 using SPTSharp.Helpers;
 using SPTSharp.Models.Eft.Common;
 using SPTSharp.Models.Eft.Game;
@@ -22,6 +23,19 @@ namespace SPTSharp.CallBacks
             long startTimeStampMS = (long)(today - new DateTime(1970, 1, 1)).TotalMilliseconds;
 
             var content = HttpResponseUtil.GetBody(new { utc_time = startTimeStampMS / 1000 });
+            BaseRequestRouter.CompressAndSend(session, request, response, content);
+        }
+
+        public static void Validate(HttpSession session, HttpRequest request, HttpResponse response, string sessionID)
+        {
+            var content = HttpResponseUtil.NullResponse();
+            BaseRequestRouter.CompressAndSend(session, request, response, content);
+        }
+
+        public static void GetGameConfig(HttpSession session, HttpRequest request, HttpResponse response, string sessionID)
+        {
+            var config = Singleton<GameController>.Instance.GetGameConfig(sessionID);
+            var content = HttpResponseUtil.GetBody(config);
             BaseRequestRouter.CompressAndSend(session, request, response, content);
         }
     }

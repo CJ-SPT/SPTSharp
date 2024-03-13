@@ -1,12 +1,7 @@
 ﻿using ComponentAce.Compression.Libs.zlib;
 using SPTSharp.Controllers;
-using System;
-using System.Collections.Generic;
 using System.IO.Compression;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SPTSharp.Helpers
 {

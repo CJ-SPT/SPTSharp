@@ -1,10 +1,5 @@
 ﻿using NetCoreServer;
 using SPTSharp.CallBacks;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SPTSharp.Routers
 {
@@ -26,18 +21,22 @@ namespace SPTSharp.Routers
         private static readonly Dictionary<string, Action<HttpSession, HttpRequest, HttpResponse, string>> _postRoutes =
             new Dictionary<string, Action<HttpSession, HttpRequest, HttpResponse, string>>
             {
-                { "/launcher/profile/login",    LauncherCallbacks.Login              },
-                { "/launcher/profile/register", LauncherCallbacks.Register           },
-                { "/launcher/profile/get",      LauncherCallbacks.GetProfile         },
-                { "/launcher/profile/info",     LauncherCallbacks.GetProfileInfo     },
-                { "/launcher/profile/remove",   LauncherCallbacks.RemoveProfile      },
-                { "/client/game/start",         GameCallbacks.GameStart              }
+                { "/launcher/profile/login",            LauncherCallbacks.Login              },
+                { "/launcher/profile/register",         LauncherCallbacks.Register           },
+                { "/launcher/profile/get",              LauncherCallbacks.GetProfile         },
+                { "/launcher/profile/info",             LauncherCallbacks.GetProfileInfo     },
+                { "/launcher/profile/remove",           LauncherCallbacks.RemoveProfile      },
+                { "/client/game/start",                 GameCallbacks.GameStart              },
+                { "/client/game/version/validate",      GameCallbacks.Validate               },
+                { "/client/languages",                  DataCallbacks.GetLocaleLanguages     },
+                { "/client/game/config",                GameCallbacks.GetGameConfig          },
+                { "/client/items",                      DataCallbacks.GetTemplateItems       },   
             };
 
         private static readonly Dictionary<string, Action<HttpSession, HttpRequest, HttpResponse, string>> _dynamicRoutes =
             new Dictionary<string, Action<HttpSession, HttpRequest, HttpResponse, string>>
             {
-                //{ "/client/menu/locale/",    LauncherRouter.HandleLogin              },
+                { "/client/menu/locale/",       DataCallbacks.GetLocaleMenu           },
             };
     }
 }

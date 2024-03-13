@@ -68,6 +68,11 @@ namespace SPTSharp.Routers
             var routeKey = _dynamicRoutes.Keys
                 .FirstOrDefault(key => url.Contains(key, StringComparison.OrdinalIgnoreCase));
 
+            if (routeKey == null)
+            {
+                return false;
+            }
+
             if (routeKey.Any())
             {
                 _dynamicRoutes[routeKey].Invoke(session, request, response, sessionID);

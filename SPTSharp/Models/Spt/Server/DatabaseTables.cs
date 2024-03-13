@@ -17,7 +17,8 @@ namespace SPTSharp.Models.Spt.Server
     public class Templates
     {
         public List<string> character = new List<string>();
-        //public Dictionary<string, STemplateItem> items;
+        public Dictionary<string, TemplateItem> items = new Dictionary<string, TemplateItem>();
+        
         //public Dictionary<string, SQuest>;
         //public SRepeatableQuestDatabase;
         //public SHandbookBase handbook;

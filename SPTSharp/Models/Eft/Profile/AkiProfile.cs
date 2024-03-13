@@ -48,8 +48,8 @@ namespace SPTSharp.Models.Eft.Profile
 
     public class Characters
     {
-        public PmcData pmc {  get; set; }
-        public PmcData scav { get; set; }
+        public PmcData pmc { get; set; } = new PmcData();
+        public PmcData scav { get; set; } = new PmcData();
     }
 
     public class UserBuilds
