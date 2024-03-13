@@ -248,7 +248,7 @@ namespace SPTSharp.Models.Eft.Common
 
     public class ExpTable
     {
-        public float exp { get; set; }
+        public int exp { get; set; }
     }
 
     public class LootAttempt

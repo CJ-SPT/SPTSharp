@@ -1,17 +1,12 @@
 ﻿using SPTSharp.Controllers;
 using SPTSharp.Models.Spt.Server;
 using SPTSharp.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SPTSharp.Helpers
 {
     public static class WatermarkUtil
     {
-        private static DatabaseTables _tables => Singleton<DatabaseController>.Instance.Tables;
+        private static DatabaseTables _tables => Singleton<DatabaseController>.Instance.GetTables();
 
         /// <summary>
         /// Get a version string (x.x.x) or (x.x.x-BLEEDINGEDGE) OR (X.X.X (18xxx))

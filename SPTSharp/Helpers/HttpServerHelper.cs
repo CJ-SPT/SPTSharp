@@ -2,6 +2,7 @@
 using SPTSharp.Controllers;
 using System;
 using System.Collections.Generic;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -58,6 +59,23 @@ namespace SPTSharp.Helpers
         public static byte[] CompressBytes(byte[] data)
         {
             return SimpleZlib.CompressToBytes(data, zlibConst.Z_BEST_COMPRESSION);
+        }
+
+        // Decompress string data
+        public static string DecompressString(string data)
+        {
+            return SimpleZlib.Decompress(data);
+        }
+
+        public static string DecompressZlibToJSON(byte[] compressedBytes)
+        {
+            using (MemoryStream compressedStream = new MemoryStream(compressedBytes))
+            using (ZLibStream gzipStream = new ZLibStream(compressedStream, CompressionMode.Decompress))
+            using (StreamReader reader = new StreamReader(gzipStream, Encoding.UTF8))
+            {
+                // Read the decompressed data and convert it to a JSON string
+                return reader.ReadToEnd();
+            }
         }
     }
 }

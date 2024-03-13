@@ -1,4 +1,5 @@
 ﻿using NetCoreServer;
+using Newtonsoft.Json;
 using SPTSharp.Controllers;
 using SPTSharp.Helpers;
 using SPTSharp.Utils;
@@ -10,9 +11,9 @@ namespace SPTSharp.CallBacks
         private static ProfileController _controller => Singleton<ProfileController>.Instance;
 
         // Handle /launcher/profiles
-        public static string GetAllMiniProfiles(HttpSession session, HttpRequest request, HttpResponse response)
+        public static string GetAllMiniProfiles()
         {
-            return HttpResponseUtil.NoBody("");
+            return HttpResponseUtil.NoBody(_controller.GetMiniProfiles());
         }
     }
 }

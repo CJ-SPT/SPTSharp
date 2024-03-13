@@ -1,6 +1,7 @@
 ﻿using SPTSharp.CallBacks;
 using SPTSharp.Helpers;
 using NetCoreServer;
+using SPTSharp.Controllers;
 
 namespace SPTSharp.Routers
 {
@@ -30,9 +31,24 @@ namespace SPTSharp.Routers
             session.SendResponseAsync(resp);
         }
 
-        public static void HandleProfiles(HttpSession session, HttpRequest request, HttpResponse response)
+        public static void HandleLogin(HttpSession session, HttpRequest request, HttpResponse response)
         {
+            var body = HttpServerHelper.DecompressZlibToJSON(request.BodyBytes);
 
+            var content = LauncherCallbacks.Login(body);
+            byte[] bytes = HttpServerHelper.CompressString(content);
+            var resp = response.MakeGetResponse(bytes);
+            session.SendResponseAsync(resp);
+        }
+
+        public static void HandleRegister(HttpSession session, HttpRequest request, HttpResponse response)
+        {
+            var body = HttpServerHelper.DecompressZlibToJSON(request.BodyBytes);
+
+            var content = LauncherCallbacks.Register(body);
+            byte[] bytes = HttpServerHelper.CompressString(content);
+            var resp = response.MakeGetResponse(bytes);
+            session.SendResponseAsync(resp);
         }
     }
 }

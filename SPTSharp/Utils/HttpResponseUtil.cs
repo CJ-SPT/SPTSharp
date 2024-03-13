@@ -1,6 +1,4 @@
-﻿using System.Text.RegularExpressions;
-
-namespace SPTSharp.Utils
+﻿namespace SPTSharp.Utils
 {
     public static class HttpResponseUtil
     {

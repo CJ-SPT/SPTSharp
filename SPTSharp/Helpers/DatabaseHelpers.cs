@@ -1,17 +1,12 @@
 ﻿using SPTSharp.Controllers;
-using SPTSharp.Models.Eft.Common.Tables;
 using SPTSharp.Models.Spt.Server;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace SPTSharp.Helpers
 {
     public static class DatabaseHelpers
     {
-        private static DatabaseTables _tables => Singleton<DatabaseController>.Instance.Tables;
+        private static DatabaseTables _tables => Singleton<DatabaseController>.Instance.GetTables();
 
 
         // Build a List containing ProfileSides

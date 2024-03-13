@@ -11,38 +11,45 @@ namespace SPTSharp.Controllers
     public class DatabaseController
     {
         // Global object holding all database information
-        public DatabaseTables Tables { get; set; }
+        private DatabaseTables _tables { get; set; }
 
         public DatabaseController() 
+        {       
+            _tables = new DatabaseTables();
+        }
+
+        // Returns the initialized database tables for use
+        public DatabaseTables GetTables()
+        {
+            return _tables;
+        }
+
+        // Loads and initializes all database data
+        internal void InitDatabase()
         {
             Logger.LogInfo("Initializing database...");
 
-            var basePath = FileIOHelper.basePath;
-            Tables = new DatabaseTables();
-
-            Logger.LogDebug("Loading json from disk...");
+            var dataPath = FileIOHelper.dataPath;
 
             // Locale data
-            Tables.Locales.Global = FileIOHelper.LoadLocaleData([basePath, "Server", "Database", "locales", "global"]);
-            Tables.Locales.Server = FileIOHelper.LoadLocaleData([basePath, "Server", "Database", "locales", "server"]);
+            _tables.Locales.Global = FileIOHelper.LoadLocaleData([dataPath, "Server", "Database", "locales", "global"]);
+            _tables.Locales.Server = FileIOHelper.LoadLocaleData([dataPath, "Server", "Database", "locales", "server"]);
             //Tables.Locale.Menu = FileIOHelper.LoadLocaleData([basePath, "Server", "Database", "locales", "menu"]); //FIXME
 
-            Tables.templates.profiles = FileIOHelper.LoadJson<ProfileTemplates>([basePath, "Server", "Database", "templates", "profiles.json"]);
-            Tables.globals = FileIOHelper.LoadJson<Globals>([basePath, "server", "Database", "globals.json"]);
+            _tables.templates.profiles = FileIOHelper.LoadJson<ProfileTemplates>([dataPath, "Server", "Database", "templates", "profiles.json"]);
+            _tables.globals = FileIOHelper.LoadJson<Globals>([dataPath, "server", "Database", "globals.json"]);
 
-            Logger.LogDebug("Loading json from disk complete...");
-        }
-
-        public void InitDatabase()
-        {
             BuildProfileDict();
             LoadImages();
+
+            Logger.LogDebug("Initializing database complete...");
         }
         
+        // Builds the profile dictionary: TODO - REFACTOR
         private void BuildProfileDict()
         {
             Logger.LogDebug("Building profile dictionary...");
-            var profiles = Tables.templates.profiles;
+            var profiles = _tables.templates.profiles;
 
             profiles.ProfileSideDict.Add("Standard", profiles.Standard);
             profiles.ProfileSideDict.Add("Left Behind", profiles.LeftBehind);
@@ -57,8 +64,8 @@ namespace SPTSharp.Controllers
          */
         private void LoadImages()
         {
-            var filePath = Path.Combine([FileIOHelper.basePath, "server", "images"]);
-            var directories = Directory.GetDirectories(Path.Combine([FileIOHelper.basePath, "server", "images"]));
+            var filePath = Path.Combine([FileIOHelper.dataPath, "server", "images"]);
+            var directories = Directory.GetDirectories(Path.Combine([FileIOHelper.dataPath, "server", "images"]));
 
             string[] imageRoutes = {
             "/files/achievement/",

@@ -1,16 +1,11 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SPTSharp.Helpers
 {
     public static class FileIOHelper
     {
-        public static string basePath = Path.Combine(AppContext.BaseDirectory, "Aki_Data");
+        public static string dataPath = Path.Combine(AppContext.BaseDirectory, "Aki_Data");
+        public static string profilePath = Path.Combine(AppContext.BaseDirectory, "user", "profiles");
 
         public static void CreateDirectory(string path)
         {
@@ -28,7 +23,7 @@ namespace SPTSharp.Helpers
 
             try
             {
-                string json = System.IO.File.ReadAllText(p);
+                string json = File.ReadAllText(p);
                 #pragma warning disable CS8603
                 return JsonConvert.DeserializeObject<T>(json);
                 #pragma warning restore CS8603
@@ -40,6 +35,16 @@ namespace SPTSharp.Helpers
                 return default; // Return default value for the type T in case of an error
                 #pragma warning restore CS8603
             }
+        }
+
+        // Saves json to disk
+        public static void SaveJson(string[] path, object obj)
+        {
+            var p = Path.Combine(path);
+
+            string jsonString = JsonConvert.SerializeObject(obj, Formatting.Indented);
+                   
+            File.WriteAllText(p, jsonString);
         }
 
         public static Dictionary<string, Dictionary<string, string>> LoadLocaleData(string[] directory)

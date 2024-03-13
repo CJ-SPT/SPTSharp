@@ -10,10 +10,10 @@ namespace SPTSharp.Controllers
 
         public ConfigController() 
         {
-            var basePath = FileIOHelper.basePath;
+            var dataPath = FileIOHelper.dataPath;
 
-            core = FileIOHelper.LoadJson<SCore>([basePath, "Server", "Configs", "core.json"]);
-            http = FileIOHelper.LoadJson<SHttp>([basePath, "Server", "Configs", "http.json"]);
+            core = FileIOHelper.LoadJson<SCore>([dataPath, "Server", "Configs", "core.json"]);
+            http = FileIOHelper.LoadJson<SHttp>([dataPath, "Server", "Configs", "http.json"]);
         }
     }
 }

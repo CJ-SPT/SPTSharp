@@ -1,11 +1,6 @@
 ﻿using SPTSharp.Helpers;
 using SPTSharp.Models.Eft.Launcher;
 using SPTSharp.Server;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SPTSharp.Controllers
 {
@@ -27,7 +22,44 @@ namespace SPTSharp.Controllers
 
         public MiniProfile GetMiniProfile(string sessionId)
         {
-            return new MiniProfile();
+            var maxLvl = ProfileHelper.GetMaxLevel();
+            var profile = Singleton<SaveServer>.Instance.GetProfile(sessionId);
+            var pmc = profile.characters.pmc;
+
+            if (pmc?.Info?.Level == null)
+            {
+                return new MiniProfile
+                {
+                    username = profile.info.username,
+                    nickname = "unknown",
+                    side = "unknown",
+                    currlvl = 0,
+                    currexp = 0,
+                    prevexp = 0,
+                    nextlvl = 0,
+                    maxlvl = maxLvl,
+                    akiData = ProfileHelper.GetDefaultAkiDataObject()
+                };
+            }
+
+            var currlvl = pmc.Info.Level;
+            var nextlvl = ProfileHelper.GetExperience(currlvl + 1);
+
+            return new MiniProfile
+            {
+                username = profile.info.username,
+                nickname = pmc.Info.Nickname,
+                side = pmc.Info.Side,
+                currlvl = pmc.Info.Level,
+                currexp = pmc.Info.Experience,
+                prevexp = currlvl == 0 ? 0 : ProfileHelper.GetExperience(currlvl),
+                nextlvl = nextlvl,
+                maxlvl = maxLvl,
+                akiData = new AkiData
+                {
+                    version = profile.aki.version
+                }
+            };
         }
     }
 }

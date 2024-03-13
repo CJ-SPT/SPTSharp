@@ -1,11 +1,16 @@
 ﻿using SPTSharp.Helpers;
+using SPTSharp.Models.Eft.Launcher;
 using SPTSharp.Models.Eft.Profile;
+using SPTSharp.Server;
 using SPTSharp.Services;
+using SPTSharp.Utils;
 
 namespace SPTSharp.Controllers
 {
     public class LauncherController
     {
+        private SaveServer _saveServer => Singleton<SaveServer>.Instance;
+
         public SConnectResponse Connect()
         {
             return new SConnectResponse
@@ -17,11 +22,87 @@ namespace SPTSharp.Controllers
             };
         }
         
+        public string Login(LoginRequestData data)
+        {
+            foreach (var profile in _saveServer.GetProfiles())
+            {
+                var account = _saveServer.GetProfile(profile.Key).info;
+
+                if (data.username == account.username)
+                {
+                    // Returns session ID
+                    return profile.Key;
+                }
+            }
+
+            Logger.LogDebug($"LOGIN: No profile found matching {data.username}");
+            return string.Empty;
+        }
+
+        public string Register(LoginRegisterData data)
+        {
+            foreach (var profile in _saveServer.GetProfiles())
+            {
+                if (data.username == _saveServer.GetProfile(profile.Key).info.username)
+                {
+                    // Username exists, return empty
+                    return string.Empty;
+                }
+            }
+
+            // return profileId on success
+            return CreateAccount(data);
+        }
+
+        private string CreateAccount(LoginRegisterData data)
+        {
+            var profileId = GenerateProfileId();
+            var scavId = GenerateProfileId();
+
+            var info = new Info
+            {
+                id = profileId,
+                scavId = scavId,
+                aid = HashUtil.GenerateAccountId(),
+                username = data.username,
+                password = data.password,
+                wipe = true,
+                edition = data.edition
+            };
+
+            // If creation was successful, we want to save it to disk
+            if (_saveServer.CreateProfile(info))
+            {
+                _saveServer.SaveProfile(profileId);
+                return profileId;
+            }
+
+            return string.Empty;
+        }
+
+        private string GenerateProfileId()
+        {
+            var guidString = Guid.NewGuid().ToString("N");
+            var timeString = System.DateTime.Now.Ticks.ToString("X");
+            var randomString = guidString + timeString;
+
+            if (randomString.Length > 24)
+            {
+                randomString = randomString.Substring(0, 24);
+            }
+            else if (randomString.Length < 24)
+            {
+                randomString = randomString.PadRight(24, '0');
+            }
+
+            return randomString;
+        }
+
         // Get descriptive text for each of the profile editions a player can choose,
         // keyed by profile.json profile type e.g. "Edge Of Darkness"
         private Dictionary<string, string> GetProfileDescriptions()
         {
-            var tables = Singleton<DatabaseController>.Instance.Tables;
+            var tables = Singleton<DatabaseController>.Instance.GetTables();
 
             var result = new Dictionary<string, string>();
 

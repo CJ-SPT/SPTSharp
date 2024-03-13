@@ -76,7 +76,7 @@ namespace SPTSharp.Server
             }
             else if ((request.Method == "POST") || (request.Method == "PUT"))
             {
-                Logger.LogError($"request method POST or PUT not handled.");
+                BaseRequestRouter.RouteRequest(this, request, Response);
             }
             else if (request.Method == "DELETE")
             {

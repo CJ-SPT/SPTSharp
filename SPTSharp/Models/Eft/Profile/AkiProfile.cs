@@ -39,7 +39,7 @@ namespace SPTSharp.Models.Eft.Profile
         /** main profile id */
         public string id { get; set; }
         public string scavId { get; set; }
-        public string aid { get; set; }
+        public int aid { get; set; }
         public string username { get; set; }
         public string password { get; set; }
         public bool wipe { get; set; }

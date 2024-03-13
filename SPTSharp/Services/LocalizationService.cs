@@ -7,7 +7,7 @@ namespace SPTSharp.Services
 {
     public static class LocalizationService
     {
-        private static LocaleBase _locales => Singleton<DatabaseController>.Instance.Tables.Locales;
+        private static LocaleBase _locales => Singleton<DatabaseController>.Instance.GetTables().Locales;
         public static string culture => CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
 
         /// <summary>
