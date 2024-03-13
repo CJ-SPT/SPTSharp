@@ -22,11 +22,6 @@ namespace SPTSharp.Server
                 throw new NullReferenceException("`_profiles` is null, this shouldn't happen");
             }
 
-            if (!_profiles.ContainsKey(sessionId))
-            {
-                throw new Exception($"No profile found for sessionId {sessionId}");
-            }
-
             return _profiles[sessionId];
         }
 

@@ -54,7 +54,18 @@ namespace SPTSharp.Server
 
         protected override void OnReceivedRequest(HttpRequest request)
         {
+            // Display the route to the server console
             Logger.LogInfo(request.Url);
+
+            try
+            {
+                var body = HttpServerHelper.DecompressZlibToJSON(request.BodyBytes);
+                Logger.LogDebug($"BODY: {body}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
 
             Logger.LogDebug(request);
 

@@ -26,6 +26,10 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Context\" />
+  </ItemGroup>
+
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="xcopy /Y /S /I &quot;$(ProjectDir)Assets\*.*&quot; &quot;$(TargetDir)Aki_data\Server&quot;" />
   </Target>

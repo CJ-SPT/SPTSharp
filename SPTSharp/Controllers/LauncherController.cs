@@ -22,6 +22,16 @@ namespace SPTSharp.Controllers
             };
         }
         
+        public Info? Find(string SessionId)
+        {
+            if (_saveServer.GetProfiles().ContainsKey(SessionId))
+            {
+                return _saveServer.GetProfile(SessionId).info;
+            }
+
+            return null;
+        }
+
         public string Login(LoginRequestData data)
         {
             foreach (var profile in _saveServer.GetProfiles())
@@ -35,7 +45,6 @@ namespace SPTSharp.Controllers
                 }
             }
 
-            Logger.LogDebug($"LOGIN: No profile found matching {data.username}");
             return string.Empty;
         }
 

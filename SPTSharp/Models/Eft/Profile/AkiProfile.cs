@@ -228,22 +228,22 @@ namespace SPTSharp.Models.Eft.Profile
 
     public class Vitality
     {
-        public Health health { get; set; }
-        public Effects effects { get; set; }
+        public Health health { get; set; } = new Health();
+        public Effects effects { get; set; } = new Effects();
     }
 
     public class Health
     {
-        public float Hydration { get; set; }
-        public float Energy { get; set; }
-        public float Temperature { get; set; }
-        public int Head {  get; set; }
-        public int Chest { get; set; }
-        public int Stomach { get; set; }
-        public int LeftArm { get; set; }
-        public int RightArm { get; set; }
-        public int LeftLeg { get; set; }
-        public int RightLeg { get; set; }
+        public float Hydration { get; set; } = 0f;
+        public float Energy { get; set; } = 0f;
+        public float Temperature { get; set; } = 0f;
+        public int Head { get; set; } = 0;
+        public int Chest { get; set; } = 0;
+        public int Stomach { get; set; } = 0;
+        public int LeftArm { get; set; } = 0;
+        public int RightArm { get; set; } = 0;
+        public int LeftLeg { get; set; } = 0;
+        public int RightLeg { get; set; } = 0;
     }
 
     public class Effects
