@@ -30,11 +30,43 @@ namespace SPTSharp.Helpers
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error loading JSON from file '{p}': {ex.Message}");
-                #pragma warning disable CS8603
-                return default; // Return default value for the type T in case of an error
-                #pragma warning restore CS8603
+                Console.WriteLine($"Error loading JSON from file '{p}': {ex.Message}"); 
+                throw new Exception(ex.Message);
             }
+        }
+
+        // returns a list of json objects
+        // optionally checking for a specific file in case of unwanted files in directory
+        public static List<T> LoadJsonFiles<T>(string[] directoryPath, string fileName = "")
+        {
+            var p = Path.Combine(directoryPath);
+
+            List<T> jsonDataList = new List<T>();
+
+            string[] jsonFiles = Directory.GetFiles(p, "*.json", SearchOption.AllDirectories);
+
+            foreach (string filePath in jsonFiles)
+            {
+                if (Path.GetFileNameWithoutExtension(filePath) != fileName)
+                {
+                    continue;
+                }
+
+                try
+                {
+                    string jsonContent = File.ReadAllText(filePath);
+                    #pragma warning disable
+                    var jsonData = JsonConvert.DeserializeObject<T>(jsonContent);
+                    jsonDataList.Add(jsonData);
+                    #pragma warning restore
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error loading JSON file: {filePath}. Error: {ex.Message}");
+                }
+            }
+
+            return jsonDataList;
         }
 
         // Saves json to disk

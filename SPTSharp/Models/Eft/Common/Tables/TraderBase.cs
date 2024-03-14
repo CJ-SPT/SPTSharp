@@ -12,9 +12,18 @@ namespace SPTSharp.Models.Eft.Common.Tables
         [JsonProperty("base")]
         public TraderBase Base { get; set; }
         public Dictionary<string, string[]>? dialogue { get; set; }
-        public Suit? suits { get; set; }
-        public TraderServiceModel[]? traderServices { get; set; }
+        public QuestAssort? questAssort { get; set; }
+        public List<Suit>? suits { get; set; }
+        public List<TraderServiceModel>? traderServices { get; set; }
 
+    }
+
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
+    public class QuestAssort
+    {
+        public Dictionary<string, string> started { get; set; }
+        public Dictionary<string, string> success { get; set; }
+        public Dictionary<string, string> fail { get; set; }
     }
 
     [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]

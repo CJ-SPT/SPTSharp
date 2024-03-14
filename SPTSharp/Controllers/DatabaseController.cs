@@ -2,6 +2,7 @@
 using SPTSharp.Models.Eft.Common;
 using SPTSharp.Models.Eft.Common.Tables;
 using SPTSharp.Models.Spt.Server;
+using SPTSharp.Models.Spt.Services;
 using SPTSharp.Routers;
 using SPTSharp.Services;
 using System.Globalization;
@@ -13,6 +14,7 @@ namespace SPTSharp.Controllers
     {
         // Global object holding all database information
         private DatabaseTables _tables { get; set; }
+        private string _dataPath = FileIOHelper.dataPath;
 
         public DatabaseController() 
         {       
@@ -30,26 +32,81 @@ namespace SPTSharp.Controllers
         {
             Logger.LogInfo("Initializing database...");
 
-            var dataPath = FileIOHelper.dataPath;
-
             // Locale data
-            _tables.Locales.Global = FileIOHelper.LoadLocaleData([dataPath, "Server", "Database", "locales", "global"]);
-            _tables.Locales.Server = FileIOHelper.LoadLocaleData([dataPath, "Server", "Database", "locales", "server"]);
-            _tables.Locales.Menu = FileIOHelper.LoadLocaleData([dataPath, "Server", "Database", "locales", "menu"]);
+            _tables.Locales.Global = FileIOHelper.LoadLocaleData([_dataPath, "Server", "Database", "locales", "global"]);
+            _tables.Locales.Server = FileIOHelper.LoadLocaleData([_dataPath, "Server", "Database", "locales", "server"]);
+            _tables.Locales.Menu = FileIOHelper.LoadLocaleData([_dataPath, "Server", "Database", "locales", "menu"]);
 
-            _tables.templates.items = FileIOHelper.LoadJson<Dictionary<string, TemplateItem>>([dataPath, "server", "Database", "templates", "items.json"]);
+            _tables.templates.items = FileIOHelper.LoadJson<Dictionary<string, TemplateItem>>([_dataPath, "server", "Database", "templates", "items.json"]);
 
             Logger.LogDebug($"Loaded {_tables.templates.items.Count} items");
 
-            _tables.templates.profiles = FileIOHelper.LoadJson<ProfileTemplates>([dataPath, "Server", "Database", "templates", "profiles.json"]);
-            _tables.globals = FileIOHelper.LoadJson<Globals>([dataPath, "server", "Database", "globals.json"]);
+            _tables.templates.profiles = FileIOHelper.LoadJson<ProfileTemplates>([_dataPath, "Server", "Database", "templates", "profiles.json"]);
+            _tables.globals = FileIOHelper.LoadJson<Globals>([_dataPath, "server", "Database", "globals.json"]);
 
             BuildProfileDict();
             LoadImages();
+            LoadTraderData();
 
             Logger.LogDebug("Initializing database complete...");
         }
         
+        private void LoadTraderData()
+        {
+            var traderDir = Path.Combine([_dataPath, "server", "database", "traders"]);
+            
+            // Break down trader data paths into usable segments
+            foreach (var dir in Directory.GetDirectories(traderDir))
+            {
+                var trader = new Trader();
+                var traderId = dir.Split('\\').Last();
+                _tables.traders.TryAdd(traderId, trader);
+
+                _tables.traders[traderId].Base = FileIOHelper.LoadJson<TraderBase>([dir, "base.json"]);
+
+                // Load assorts
+                var assortFile = Path.Combine(dir, "assort.json");
+                if (File.Exists(assortFile))
+                {
+                    _tables.traders[traderId].assort = FileIOHelper.LoadJson<TraderAssort>([assortFile]);
+                }
+
+                // Load quest assorts
+                var questAssortFile = Path.Combine(dir, "questassort.json");
+                if (File.Exists(questAssortFile))
+                {
+                    _tables.traders[traderId].questAssort = FileIOHelper.LoadJson<QuestAssort>([questAssortFile]);
+                }
+
+                // Load suits
+                var bearSuitsFile = Path.Combine(dir, "bearsuits.json");
+                var usecSuitsFile = Path.Combine(dir, "usecsuits.json");
+                var suitsFile = Path.Combine(dir, "suits.json");
+                if (File.Exists(suitsFile))
+                {
+                    var tmpBearSuits = FileIOHelper.LoadJson<List<Suit>>([bearSuitsFile]);
+                    var tmpUsecSuits = FileIOHelper.LoadJson<List<Suit>>([usecSuitsFile]);
+                    var suits = FileIOHelper.LoadJson<List<Suit>>([suitsFile]);
+
+                    _tables.traders[traderId].suits = [.. tmpBearSuits, .. tmpUsecSuits, .. suits];
+                }
+
+                // Load dialogues
+                var dialogueFile = Path.Combine(dir, "dialogue.json");
+                if (File.Exists(dialogueFile))
+                {
+                    _tables.traders[traderId].dialogue = FileIOHelper.LoadJson<Dictionary<string, string[]>>([dialogueFile]);
+                }
+
+                // Load services
+                var servicesFile = Path.Combine(dir, "services.json");
+                if (File.Exists(servicesFile))
+                {
+                    _tables.traders[traderId].traderServices = FileIOHelper.LoadJson<List<TraderServiceModel>>([servicesFile]);
+                }
+            }
+        }
+
         // Builds the profile dictionary: TODO - REFACTOR
         private void BuildProfileDict()
         {
