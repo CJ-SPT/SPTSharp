@@ -37,13 +37,20 @@ namespace SPTSharp.CallBacks
 
         public static void GetTemplateItems(HttpSession session, HttpRequest request, HttpResponse response, string sessionID)
         {
-            var content = HttpResponseUtil.GetUnclearedBody(_tables.templates.items);
+            var content = HttpResponseUtil.GetUnclearedBody(new { });
             BaseRequestRouter.CompressAndSend(session, request, response, content);
         }
 
         public static void GetTemplateSuits(HttpSession session, HttpRequest request, HttpResponse response, string sessionID)
         {
+            var content = HttpResponseUtil.GetUnclearedBody(new { });
+            BaseRequestRouter.CompressAndSend(session, request, response, content);
+        }
 
+        public static void GetGlobals(HttpSession session, HttpRequest request, HttpResponse response, string sessionID)
+        {
+            var content = HttpResponseUtil.GetUnclearedBody(new { });
+            BaseRequestRouter.CompressAndSend(session, request, response, content);
         }
     }
 }

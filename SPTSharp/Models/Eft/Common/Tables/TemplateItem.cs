@@ -7,14 +7,26 @@ namespace SPTSharp.Models.Eft.Common.Tables
 {
     public class TemplateItem
     {
+        [JsonProperty("_id", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string _id { get; set; }
+        
+        [JsonProperty("_name", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string _name { get; set; }
+        
+        [JsonProperty("_parent", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string _parent { get; set; }
+        
+        [JsonProperty("_type", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string _type { get; set; }
+        
+        [JsonProperty("_props", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public Props _props { get; set; }
+        
+        [JsonProperty("_proto", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string _proto { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Props
     {
         public List<object> AllowSpawnOnLocations { get; set; }
@@ -426,18 +438,21 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public double? MaxUsages { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class IHealthEffect
     {
         public string Type { get; set; }
         public double Value { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Prefab
     {
         public string Path { get; set; }
         public string Rcid { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Grid
     {
         public string Name { get; set; }
@@ -447,6 +462,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public string Proto { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class GridProps
     {
         public List<GridFilter> Filters { get; set; }
@@ -458,12 +474,14 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public bool IsSortingTable { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class GridFilter
     {
         public List<string> Filter { get; set; }
         public List<string> ExcludedFilter { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Slot
     {
         public string Name { get; set; }
@@ -476,11 +494,13 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public string Proto { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class SlotProps
     {
         public List<SlotFilter> Filters { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class SlotFilter
     {
         public double? Shift { get; set; }
@@ -492,6 +512,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public int? AnimationIndex { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class StackSlot
     {
         public string Name { get; set; }
@@ -503,11 +524,13 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public object Upd { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class StackSlotProps
     {
         public List<SlotFilter> Filters { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class IRandomLootSettings
     {
         public bool AllowToSpawnIdenticalItems { get; set; }
@@ -520,6 +543,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public int MinCount { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class IRandomLootExcluded
     {
         public List<object> CategoryTemplates { get; set; }
@@ -527,17 +551,20 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public List<object> Templates { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class EffectsHealth
     {
         public EffectsHealthProps Energy { get; set; }
         public EffectsHealthProps Hydration { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class EffectsHealthProps
     {
         public double Value { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class EffectsDamage
     {
         public IEffectDamageProps Pain { get; set; }
@@ -549,6 +576,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public IEffectDamageProps DestroyedPart { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class IEffectDamageProps
     {
         public double Delay { get; set; }
@@ -559,6 +587,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public double? HealthPenaltyMax { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class IColor
     {
         public int R { get; set; }
@@ -567,6 +596,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public int A { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class IShotsGroupSettings
     {
         public int EndShotIndex { get; set; }
@@ -575,5 +605,4 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public Xyz ShotRecoilRotationStrength { get; set; }
         public int StartShotIndex { get; set; }
     }
-
 }

@@ -41,11 +41,6 @@ namespace SPTSharp.Controllers
 
             Logger.LogDebug($"Loaded {_tables.templates.items.Count} items");
 
-            foreach (var item in _tables.templates.items)
-            {
-                Logger.LogDebug(item.Value._name);
-            }
-
             _tables.templates.profiles = FileIOHelper.LoadJson<ProfileTemplates>([dataPath, "Server", "Database", "templates", "profiles.json"]);
             _tables.globals = FileIOHelper.LoadJson<Globals>([dataPath, "server", "Database", "globals.json"]);
 

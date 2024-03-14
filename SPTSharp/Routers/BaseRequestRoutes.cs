@@ -21,22 +21,25 @@ namespace SPTSharp.Routers
         private static readonly Dictionary<string, Action<HttpSession, HttpRequest, HttpResponse, string>> _postRoutes =
             new Dictionary<string, Action<HttpSession, HttpRequest, HttpResponse, string>>
             {
-                { "/launcher/profile/login",            LauncherCallbacks.Login              },
-                { "/launcher/profile/register",         LauncherCallbacks.Register           },
-                { "/launcher/profile/get",              LauncherCallbacks.GetProfile         },
-                { "/launcher/profile/info",             LauncherCallbacks.GetProfileInfo     },
-                { "/launcher/profile/remove",           LauncherCallbacks.RemoveProfile      },
-                { "/client/game/start",                 GameCallbacks.GameStart              },
-                { "/client/game/version/validate",      GameCallbacks.Validate               },
-                { "/client/languages",                  DataCallbacks.GetLocaleLanguages     },
-                { "/client/game/config",                GameCallbacks.GetGameConfig          },
-                { "/client/items",                      DataCallbacks.GetTemplateItems       },   
+                { "/launcher/profile/login",                    LauncherCallbacks.Login                     },
+                { "/launcher/profile/register",                 LauncherCallbacks.Register                  },
+                { "/launcher/profile/get",                      LauncherCallbacks.GetProfile                },
+                { "/launcher/profile/info",                     LauncherCallbacks.GetProfileInfo            },
+                { "/launcher/profile/remove",                   LauncherCallbacks.RemoveProfile             },
+                { "/client/game/start",                         GameCallbacks.GameStart                     },
+                { "/client/game/version/validate",              GameCallbacks.Validate                      },
+                { "/client/languages",                          DataCallbacks.GetLocaleLanguages            },
+                { "/client/game/config",                        GameCallbacks.GetGameConfig                 },
+                { "/client/items",                              DataCallbacks.GetTemplateItems              }, // TODO
+                { "/client/customization",                      DataCallbacks.GetTemplateSuits              }, // TODO
+                { "/client/globals",                            DataCallbacks.GetGlobals                    }, // TODO
+                { "/client/trading/api/traderSettings",         TraderCallbacks.GetTraderSettings           }, // TODO
             };
 
         private static readonly Dictionary<string, Action<HttpSession, HttpRequest, HttpResponse, string>> _dynamicRoutes =
             new Dictionary<string, Action<HttpSession, HttpRequest, HttpResponse, string>>
             {
-                { "/client/menu/locale/",       DataCallbacks.GetLocaleMenu           },
+                { "/client/menu/locale/",                       DataCallbacks.GetLocaleMenu                 },
             };
     }
 }

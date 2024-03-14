@@ -61,7 +61,7 @@ namespace SPTSharp.Helpers
             }
         }
 
-        static byte[] CompressStringGzipGZip(string text)
+        static byte[] CompressStringGzip(string text)
         {
             byte[] buffer = Encoding.UTF8.GetBytes(text);
 

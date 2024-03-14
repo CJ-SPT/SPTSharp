@@ -58,6 +58,8 @@ namespace SPTSharp.Routers
             byte[] bytes = HttpServerHelper.CompressStringZlib(content);
             var resp = response.MakeGetResponse(bytes);
 
+            
+
             session.SendResponseAsync(resp);
         }
 
