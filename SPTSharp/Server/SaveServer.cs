@@ -72,6 +72,16 @@ namespace SPTSharp.Server
             return false;
         }
 
+        public void LoadAllProfilesFromDisk()
+        {
+            foreach (var profile in Directory.GetFiles(_profileFilePath))
+            {
+                var id = Path.GetFileNameWithoutExtension(profile);
+                _profiles[id] = FileIOHelper.LoadJson<AkiProfile>([profile]);
+                Logger.LogInfo($"Loaded profile {id}");
+            }
+        }
+
         public void SaveProfile(string sessionID)
         {
             Stopwatch stopwatch = new Stopwatch();
@@ -97,7 +107,7 @@ namespace SPTSharp.Server
             var filename = $"{sessionID}.json";
             var filePath = Path.Combine(_profileFilePath, filename);
 
-            if (!_profiles.ContainsKey(sessionID))
+            if (_profiles.ContainsKey(sessionID))
             {
                 _profiles.Remove(sessionID);
             }

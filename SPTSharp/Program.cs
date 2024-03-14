@@ -54,6 +54,7 @@ namespace SPTSharp
 
             // Servers
             Singleton<SaveServer>.Instance = new SaveServer();
+            Singleton<SaveServer>.Instance.LoadAllProfilesFromDisk();
         }
     }
 }
