@@ -17,33 +17,30 @@ namespace SPTSharp.Helpers
     {
         private static DatabaseTables _tables => Singleton<DatabaseController>.Instance.GetTables();
 
-        public static TraderBase? GetTrader(string traderID, string sessionID)
+        public static TraderBase GetTrader(string traderID, string sessionID)
         {
             var pmcData = ProfileHelper.GetPmcProfile(sessionID);
 
-            if (pmcData == null)
-            {
-                Logger.LogError($"No profile with sessionID: {sessionID}");
-            }
 
             // Profile has traderInfo dict (profile beyond creation stage) but no requested trader in profile
-            if (pmcData?.TradersInfo  != null && !pmcData.TradersInfo.ContainsKey(traderID))
+            if (pmcData.TradersInfo  != null && !pmcData.TradersInfo.ContainsKey(traderID))
             {
                 // Add trader values to profile
                 ResetTrader(traderID, sessionID);
                 LevelUpTrader(traderID, pmcData);
             }
 
-            var trader = _tables?.traders[traderID]?.Base;
-
-            if (trader == null)
-            {
-                Logger.LogError($"Trader is either null or not found {traderID}");
-            }
+            var trader = _tables.traders[traderID].Base;
 
             return trader;
         }
 
+        /// <summary>
+        ///  Get a trader base object, update profile to reflect players current standing in profile
+        ///  when trader not found in profile
+        /// </summary>
+        /// <param name="traderID"></param>
+        /// <param name="sessionID"></param>
         public static void ResetTrader(string traderID, string sessionID)
         {
             var account = Singleton<SaveServer>.Instance.GetProfile(sessionID);

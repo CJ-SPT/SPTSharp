@@ -6,6 +6,11 @@ namespace SPTSharp.Models.Eft.Profile
         public string side {  get; set; }
         public string nickname {  get; set; }
         public string headId { get; set; }
-        public string voidId { get; set; }
+        public string voiceId { get; set; }
+    }
+
+    public class CreateProfileResponseData
+    {
+        public string uid { get; set; }
     }
 }

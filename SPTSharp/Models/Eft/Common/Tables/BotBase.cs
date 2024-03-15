@@ -59,7 +59,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public Stats Stats { get; set; }
         public Dictionary<string, bool> Encyclopedia { get; set; }
         public Dictionary<string, TaskConditionCounter> TaskConditionCounters { get; set; }
-        public InsuredItem[] InsuredItems { get; set; }
+        public List<InsuredItem> InsuredItems { get; set; }
         public Hideout Hideout { get; set; }
         public QuestStatus[] Quests { get; set; }
         public Dictionary<string, TraderInfo> TradersInfo { get; set; }
@@ -92,7 +92,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
 
     public class UnlockedInfo
     {
-        public string[] unlockedProductionRecipe { get; set; }
+        public List<string> unlockedProductionRecipe { get; set; }
     }
 
     public class Info
@@ -106,7 +106,8 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public string Voice { get; set; }
         public int Level { get; set; }
         public int Experience { get; set; }
-        public long RegistrationDate { get; set; }
+        // Starts as string, ends as long
+        public dynamic RegistrationDate { get; set; }
         public string GameVersion { get; set; }
         public int AcountType { get; set; }
         public EMemberCategory MemberCategory { get; set; }
@@ -199,7 +200,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
 
     public class Inventory
     {
-        public Item[] items { get; set; }
+        public List<Item> items { get; set; }
         public string equipment { get; set; }
         public string stash { get; set; }
         public string sortingTable { get; set; }
@@ -251,8 +252,8 @@ namespace SPTSharp.Models.Eft.Common.Tables
 
     public class EftStats
     {
-        public string[] CarriedQuestItems { get; set; }
-        public Victim[] Victims { get; set; }
+        public List<string> CarriedQuestItems { get; set; }
+        public List<Victim> Victims { get; set; }
         public int TotalSessionExperience { get; set; }
         public int LastSessionDate { get; set; }
         public SessionCounters SessionCounters { get; set; }
@@ -260,11 +261,12 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public float? SessionExperienceMult { get; set; }
         public float? ExperienceBonusMult { get; set; }
         public Agressor? Agressor { get; set; }
-        public DroppedItem[]? DroppedItems { get; set; }
-        public FoundInRaidItem[]? FoundInRaidItems { get; set; }
+        public List<DroppedItem>? DroppedItems { get; set; }
+        public List<FoundInRaidItem>? FoundInRaidItems { get; set; }
         public DamageHistory? DamageHistory { get; set; }
         public DeathCause? DeathCause { get; set; }
         public LastPlayerState? LastPlayerState { get; set; }
+        public int TotalInGameTime { get; set; }
         public string? SurvivorClass { get; set; }
     }
 
@@ -297,12 +299,12 @@ namespace SPTSharp.Models.Eft.Common.Tables
 
     public class SessionCounters
     {
-        public CounterKeyValue[] Items { get; set; }
+        public List<CounterKeyValue> Items { get; set; }
     }
 
     public class OverallCounters
     {
-        public CounterKeyValue[] Items { get; set; }
+        public List<CounterKeyValue> Items { get; set; }
     }
 
     public class CounterKeyValue
@@ -328,7 +330,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
     {
         public string LethalDamagePart { get; set; }
         public LethalDamage LethalDamage { get; set; }
-        public BodyPartsDamageHistory[] BodyParts { get; set; }
+        public List<BodyPartsDamageHistory> BodyParts { get; set; }
     }
 
     public class LethalDamage

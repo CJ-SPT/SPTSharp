@@ -4,8 +4,21 @@ using System.Globalization;
 
 namespace SPTSharp.Models.Eft.Common.Tables
 {
-    public class Item
+    public class Item : ICloneable
     {
+        public object Clone()
+        {
+            return new Item
+            {
+                _id = this._id,
+                _tpl = this._tpl,
+                parentId = this.parentId,
+                slotId = this.slotId,
+                upd = this.upd,
+                location = this.location,
+            };
+        }
+
         public string _id { get; set; }
         public string _tpl { get; set; }
         public string? parentId { get; set; }

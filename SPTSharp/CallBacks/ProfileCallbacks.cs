@@ -51,14 +51,25 @@ namespace SPTSharp.CallBacks
             }    
 
             content = HttpResponseUtil.GetBody(new { status = "ok"});
-
             BaseRequestRouter.CompressAndSend(session, request, response, content);
         }
         #pragma warning restore
 
         public static void CreateProfile(HttpSession session, HttpRequest request, HttpResponse response, string sessionID)
         {
+            string body = HttpServerHelper.DecompressZlibToJSON(request.BodyBytes);
 
+            if (body == null)
+            {
+                throw new NullReferenceException("Request body was null for profile creation");
+            }
+
+            ProfileCreateRequestData requestData = JsonConvert.DeserializeObject<ProfileCreateRequestData>(body);
+
+            var id = _controller.CreateProfile(requestData, sessionID);
+            
+            var content = HttpResponseUtil.GetBody(new { uid = id });
+            BaseRequestRouter.CompressAndSend(session, request, response, content);
         }
     }
 }

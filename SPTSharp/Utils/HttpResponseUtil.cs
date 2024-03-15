@@ -22,7 +22,13 @@ namespace SPTSharp.Utils
          */
         public static string NoBody(object data)
         {
-            return ClearString(JsonConvert.SerializeObject(data));
+            var settings = new JsonSerializerSettings();
+            settings.Formatting = Formatting.Indented;
+            settings.FloatFormatHandling = FloatFormatHandling.DefaultValue;
+            settings.Converters = new List<JsonConverter> { new WholeNumberFloatConverter() };
+            settings.NullValueHandling = NullValueHandling.Ignore;
+
+            return ClearString(JsonConvert.SerializeObject(data, settings));
         }
 
         /**
@@ -36,6 +42,9 @@ namespace SPTSharp.Utils
         {
             var settings = new JsonSerializerSettings();
             settings.Formatting = Formatting.Indented;
+            settings.FloatFormatHandling = FloatFormatHandling.DefaultValue;
+            settings.Converters = new List<JsonConverter> { new WholeNumberFloatConverter() };
+            settings.NullValueHandling = NullValueHandling.Ignore;
 
             return sanitize
                 ? JsonConvert.SerializeObject(new GetBodyResponseData<object> { err = err, errmsg = errmsg, data = data }, settings)
@@ -49,6 +58,7 @@ namespace SPTSharp.Utils
             settings.Formatting = Formatting.Indented;
             settings.FloatFormatHandling = FloatFormatHandling.DefaultValue;
             settings.Converters = new List<JsonConverter> { new WholeNumberFloatConverter() };
+            settings.NullValueHandling = NullValueHandling.Ignore;
 
             return JsonConvert.SerializeObject(new { err = err, errmsg = errmsg, data = data }, settings);
         }

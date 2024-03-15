@@ -26,10 +26,6 @@ namespace SPTSharp
             stopwatch.Stop();
             Logger.LogInfo($"Startup took {stopwatch.ElapsedMilliseconds} milliseconds");
 
-            var data = HttpResponseUtil.GetUnclearedBody(Singleton<DatabaseController>.Instance.GetTables().templates.items);
-
-            File.WriteAllText(Path.Combine(FileIOHelper.dataPath, "test.json"), data);
-
             while (true)
             {
                 string line = Console.ReadLine();

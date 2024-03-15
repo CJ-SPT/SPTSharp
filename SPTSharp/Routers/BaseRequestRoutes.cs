@@ -31,7 +31,7 @@ namespace SPTSharp.Routers
                 { "/client/languages",                          DataCallbacks.GetLocaleLanguages            },
                 { "/client/game/config",                        GameCallbacks.GetGameConfig                 },
                 { "/client/items",                              DataCallbacks.GetTemplateItems              },
-                { "/client/customization",                      DataCallbacks.GetTemplateSuits              }, // TODO
+                { "/client/customization",                      DataCallbacks.GetTemplateSuits              },
                 { "/client/globals",                            DataCallbacks.GetGlobals                    }, // Might be done?
                 { "/client/trading/api/traderSettings",         TraderCallbacks.GetTraderSettings           }, // Might be done?
                 { "/client/settings",                           DataCallbacks.GetSettings                   },

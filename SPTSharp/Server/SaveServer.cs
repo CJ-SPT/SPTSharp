@@ -60,6 +60,21 @@ namespace SPTSharp.Server
             return true;
         }
 
+        /// <summary>
+        /// Add full profile in memory by key (info.id)
+        /// </summary>
+        /// <param name="profile"></param>
+        public void AddProfile(AkiProfile profile)
+        {
+            if (!_profiles.ContainsKey(profile.info.id))
+            {
+                _profiles[profile.info.id] = profile;
+                return;
+            }
+
+            Logger.LogError($"No profile exists for profile: {profile.info.id}");
+        }
+
         // Loads a profile by sessionId from disk
         // returns true on success, false on failure
         public bool LoadProfile(string sessionID)

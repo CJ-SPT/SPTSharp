@@ -1,5 +1,6 @@
 ﻿using SPTSharp.Controllers;
 using SPTSharp.Models.Eft.Common;
+using SPTSharp.Models.Eft.Common.Tables;
 using SPTSharp.Models.Eft.Launcher;
 using SPTSharp.Models.Eft.Profile;
 using SPTSharp.Models.Spt.Server;
@@ -144,6 +145,51 @@ namespace SPTSharp.Helpers
             };
         }
 
+        public static Stats GetDefaultCounters()
+        {
+            return new Stats
+            {
+                Eft = new EftStats
+                {
+                    CarriedQuestItems = new List<string>(),
+                    DamageHistory = new DamageHistory
+                    {
+                        LethalDamagePart = "Head",
+                        LethalDamage = null, // Will this need fixed? AKI sets to undefined?
+                        BodyParts = new List<BodyPartsDamageHistory>(),
+                    },
+                    DroppedItems = new List<DroppedItem>(),
+                    ExperienceBonusMult = 0,
+                    FoundInRaidItems = new List<FoundInRaidItem>(),
+                    LastPlayerState = null,
+                    LastSessionDate = 0,
+                    OverallCounters = new OverallCounters
+                    {
+                        Items = new List<CounterKeyValue>()
+                    },
+                    SessionCounters = new SessionCounters
+                    {
+                        Items = new List<CounterKeyValue>(),
+                    },
+                    SessionExperienceMult = 0,
+                    SurvivorClass = "Unknown",
+                    TotalInGameTime = 0,
+                    TotalSessionExperience = 0,
+                    Victims = new List<Victim>()
+                }
+            };
+        }
+
+        /// <summary>
+        /// is this profile flagged for data removal
+        /// </summary>
+        /// <param name="sessionID"></param>
+        /// <returns></returns>
+        public static bool IsWiped(string sessionID)
+        {
+            return _saveServer.GetProfile(sessionID).info.wipe;
+        }
+
         public static string GetServerVersion()
         {
             return WatermarkUtil.GetVersionTag(true);
@@ -181,16 +227,6 @@ namespace SPTSharp.Helpers
             var fullProfile = GetFullProfile(sessionID);
 
             return fullProfile.characters.scav;
-        }
-
-        /// <summary>
-        /// is this profile flagged for data removal
-        /// </summary>
-        /// <param name="sessionID"></param>
-        /// <returns>true if profile is to be wiped of data</returns>
-        public static bool IsWiped(string sessionID)
-        {
-            return _saveServer.GetProfile(sessionID).info.wipe;
         }
     }
 }

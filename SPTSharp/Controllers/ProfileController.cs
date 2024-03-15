@@ -5,6 +5,7 @@ using SPTSharp.Models.Eft.Profile;
 using SPTSharp.Models.Spt.Server;
 using SPTSharp.Server;
 using SPTSharp.Services;
+using SPTSharp.Utils;
 using System.Data;
 
 namespace SPTSharp.Controllers
@@ -93,8 +94,8 @@ namespace SPTSharp.Controllers
             pmcData.Info.Nickname = data.nickname;
             pmcData.Info.LowerNickname = data.nickname.ToLower();
             pmcData.Info.RegistrationDate = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-            pmcData.Info.Voice = _tables.templates.customization[data.voidId]._name;
-            pmcData.Stats = null; //TODO
+            pmcData.Info.Voice = _tables.templates.customization[data.voiceId]._name;
+            pmcData.Stats = ProfileHelper.GetDefaultCounters();
             pmcData.Info.NeedWipeOptions = [];
             pmcData.Customization.Head = data.headId;
             pmcData.Health.UpdateTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
@@ -105,7 +106,87 @@ namespace SPTSharp.Controllers
             pmcData.CoopExtractCounts = new Dictionary<string, int>();
             pmcData.Achievements = new Dictionary<string, int>();
 
-            // TODO - REST
+            UpdateInventoryEquipmentId(pmcData);
+
+            if (pmcData.UnlockedInfo.unlockedProductionRecipe == null)
+            {
+                pmcData.UnlockedInfo.unlockedProductionRecipe = new List<string>();
+            }
+
+            pmcData.Inventory.items = ItemHelper.ReplaceIDs(pmcData.Inventory.items, pmcData, pmcData.InsuredItems);
+            pmcData.Inventory.hideoutAreaStashes = new Dictionary<string, string>();
+
+            AkiProfile details = new AkiProfile
+            {
+                info = account,
+                characters = new Characters { pmc =  pmcData, scav = new PmcData() },
+                suits = profile.suits,
+                //TODO suits
+                dialogues = profile.dialogues,
+                //aki = ProfileHelper.GetDefaultAkiDataObject(), // Fix ambiguous reference?
+                vitality = { },
+                inraid = { },
+                insurances = { },
+                //TODO insurances
+                achievements = { },
+            };
+
+            // TODO: check and fix profile issues
+            // TODO: add missing hideout bonuses
+            
+            _saveServer.AddProfile(details);
+
+            // TODO: Set quests available for start
+            // TODO: Set quests available for finish
+
+            //ResetAllTradersInProfile(sessionID);
+
+            // TODO: Generate scav
+
+            // Save and reload profile
+            _saveServer.SaveProfile(sessionID);
+            _saveServer.LoadProfile(sessionID);
+
+            // Completed account creation
+            _saveServer.GetProfile(sessionID).info.wipe = false;
+            _saveServer.SaveProfile(sessionID);
+
+            // TODO: Seasonal event profile handling
+
+            return pmcData._id;
+        }
+
+        private void ResetAllTradersInProfile(string sessionID)
+        {
+            foreach (var traderID in _tables.traders)
+            {
+                TraderHelper.ResetTrader(traderID.Key, sessionID);
+            }
+        }
+
+        /// <summary>
+        /// make profiles pmcData.Inventory.equipment unique
+        /// </summary>
+        /// <param name="pmcData"></param>
+        private void UpdateInventoryEquipmentId(PmcData pmcData)
+        {
+            var oldEquipmentId = pmcData.Inventory.equipment;
+            pmcData.Inventory.equipment = HashUtil.GenerateHash();
+
+            foreach (var item in pmcData.Inventory.items)
+            {
+                if (item.parentId == oldEquipmentId)
+                {
+                    item.parentId = pmcData.Inventory.equipment;
+
+                    continue;
+                }
+
+                if (item._id == oldEquipmentId)
+                {
+                    item._id = pmcData.Inventory.equipment;
+                }
+            }
         }
 
         private void DeleteProfileBySessionID(string sessionID)
