@@ -54,11 +54,9 @@ namespace SPTSharp.Routers
 
         public static void CompressAndSend(HttpSession session, HttpRequest request, HttpResponse response, string content)
         {
-            Logger.LogDebug($"Response: \n{content}\n");
+            //Logger.LogDebug($"Response: \n{content}\n");
             byte[] bytes = HttpServerHelper.CompressStringZlib(content);
             var resp = response.MakeGetResponse(bytes);
-
-            
 
             session.SendResponseAsync(resp);
         }

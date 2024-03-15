@@ -49,7 +49,8 @@ namespace SPTSharp.CallBacks
 
         public static void GetGlobals(HttpSession session, HttpRequest request, HttpResponse response, string sessionID)
         {
-            var content = HttpResponseUtil.GetUnclearedBody(new { });
+            _tables.globals.time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            var content = HttpResponseUtil.GetBody(_tables.globals);
             BaseRequestRouter.CompressAndSend(session, request, response, content);
         }
     }

@@ -41,8 +41,8 @@ namespace SPTSharp.Models.Eft.Common
         public bool MaxLoyaltyLevelForAll { get; set; }
         public float GlobalLootChanceModifier { get; set; }
         public GraphicSettings GraphicSettings { get; set; }
-        public float TimeBeforeDeploy { get; set; }
-        public float TimeBeforeDeployLocal { get; set; }
+        public int TimeBeforeDeploy { get; set; }
+        public int TimeBeforeDeployLocal { get; set; }
         public int TradingSetting { get; set; }
         public TradingSettings TradingSettings { get; set; }
         public ItemsCommonSettings ItemsCommonSettings { get; set; }
@@ -78,9 +78,9 @@ namespace SPTSharp.Models.Eft.Common
         public float SkillMinEffectiveness { get; set; }
         public float SkillFatiguePerPoint { get; set; }
         public float SkillFreshEffectiveness { get; set; }
-        public float SkillFreshPoints { get; set; }
-        public float SkillPointsBeforeFatigue { get; set; }
-        public float SkillFatigueReset { get; set; }
+        public int SkillFreshPoints { get; set; }
+        public int SkillPointsBeforeFatigue { get; set; }
+        public int SkillFatigueReset { get; set; }
         public bool DiscardLimitsEnabled { get; set; }
         public EventSettings EventSettings { get; set; }
         public FavoriteItemsSettings FavoriteItemsSettings { get; set; }
@@ -91,10 +91,10 @@ namespace SPTSharp.Models.Eft.Common
         public Xyz SprintSpeed { get; set; }
         public SquadSettings SquadSettings { get; set; }
         public float SkillEnduranceWeightThreshold { get; set; }
-        public float TeamSearchingTimeout { get; set; }
+        public int TeamSearchingTimeout { get; set; }
         public Insurance Insurance { get; set; }
         public float SkillExpPerLevel { get; set; }
-        public float GameSearchingTimeout { get; set; }
+        public int GameSearchingTimeout { get; set; }
         public Xyz WallContusionAbsorption { get; set; }
         public WeaponFastDrawSettings WeaponFastDrawSettings { get; set; }
         public SkillsSettings SkillsSettings { get; set; }
@@ -124,26 +124,26 @@ namespace SPTSharp.Models.Eft.Common
     public class EventSettings
     {
         public bool EventActive { get; set; }
-        public float EventTime { get; set; }
+        public int EventTime { get; set; }
         public EventWeather EventWeather { get; set; }
         public float ExitTimeMultiplier { get; set; }
         public float StaminaMultiplier { get; set; }
         public EventWeather SummonFailedWeather { get; set; }
         public EventWeather SummonSuccessWeather { get; set; }
-        public float WeatherChangeTime { get; set; }
+        public int WeatherChangeTime { get; set; }
     }
 
     public class EventWeather
     {
         public float Cloudness { get; set; }
-        public float Hour { get; set; }
-        public float Minute { get; set; }
+        public int Hour { get; set; }
+        public int Minute { get; set; }
         public float Rain { get; set; }
         public float RainRandomness { get; set; }
         public float ScaterringFogDensity { get; set; }
         public Xyz TopWindDirection { get; set; }
         public float Wind { get; set; }
-        public float WindDirection { get; set; }
+        public int WindDirection { get; set; }
     }
 
     public class GraphicSettings
@@ -189,8 +189,8 @@ namespace SPTSharp.Models.Eft.Common
         public Kill kill { get; set; }
         public Level level { get; set; }
         public LootAttempt[] loot_attempts { get; set; }
-        public float expForLockedDoorOpen { get; set; }
-        public float expForLockedDoorBreach { get; set; }
+        public int expForLockedDoorOpen { get; set; }
+        public int expForLockedDoorBreach { get; set; }
         public float triggerMult { get; set; }
     }
 
@@ -204,11 +204,11 @@ namespace SPTSharp.Models.Eft.Common
     public class MatchEnd
     {
         public string README { get; set; }
-        public float survived_exp_requirement { get; set; }
-        public float survived_seconds_requirement { get; set; }
-        public float survived_exp_reward { get; set; }
-        public float mia_exp_reward { get; set; }
-        public float runner_exp_reward { get; set; }
+        public int survived_exp_requirement { get; set; }
+        public int survived_seconds_requirement { get; set; }
+        public int survived_exp_reward { get; set; }
+        public int mia_exp_reward { get; set; }
+        public int runner_exp_reward { get; set; }
         public float leftMult { get; set; }
         public float miaMult { get; set; }
         public float survivedMult { get; set; }
@@ -219,31 +219,31 @@ namespace SPTSharp.Models.Eft.Common
     public class Kill
     {
         public Combo[] combo { get; set; }
-        public float victimLevelExp { get; set; }
+        public int victimLevelExp { get; set; }
         public float headShotMult { get; set; }
         public float expOnDamageAllHealth { get; set; }
         public float longShotDistance { get; set; }
         public float bloodLossToLitre { get; set; }
         public float botExpOnDamageAllHealth { get; set; }
         public float botHeadShotMult { get; set; }
-        public float victimBotLevelExp { get; set; }
+        public int victimBotLevelExp { get; set; }
         public float pmcExpOnDamageAllHealth { get; set; }
         public float pmcHeadShotMult { get; set; }
     }
 
     public class Combo
     {
-        public float percent { get; set; }
+        public int percent { get; set; }
     }
 
     public class Level
     {
         public ExpTable[] exp_table { get; set; }
-        public float trade_level { get; set; }
-        public float savage_level { get; set; }
-        public float clan_level { get; set; }
-        public float mastering1 { get; set; }
-        public float mastering2 { get; set; }
+        public int trade_level { get; set; }
+        public int savage_level { get; set; }
+        public int clan_level { get; set; }
+        public int mastering1 { get; set; }
+        public int mastering2 { get; set; }
     }
 
     public class ExpTable
@@ -263,15 +263,15 @@ namespace SPTSharp.Models.Eft.Common
 
     public class Class
     {
-        public float resistance { get; set; }
+        public int resistance { get; set; }
     }
 
     public class Mastering
     {
         public string Name { get; set; }
         public string[] Templates { get; set; }
-        public float Level2 { get; set; }
-        public float Level3 { get; set; }
+        public int Level2 { get; set; }
+        public int Level3 { get; set; }
     }
 
     public class Customization
@@ -504,10 +504,10 @@ namespace SPTSharp.Models.Eft.Common
     {
         public float DefaultDelay { get; set; }
         public float DefaultResidueTime { get; set; }
-        public float HealExperience { get; set; }
-        public float OfflineDurationMin { get; set; }
-        public float OfflineDurationMax { get; set; }
-        public float RemovePrice { get; set; }
+        public int HealExperience { get; set; }
+        public int OfflineDurationMin { get; set; }
+        public int OfflineDurationMax { get; set; }
+        public int RemovePrice { get; set; }
         public bool RemovedAfterDeath { get; set; }
         public Probability BulletHitProbability { get; set; }
         public Probability FallingProbability { get; set; }
@@ -551,15 +551,15 @@ namespace SPTSharp.Models.Eft.Common
 
     public class Intoxication
     {
-        public float DefaultDelay { get; set; }
-        public float DefaultResidueTime { get; set; }
-        public float DamageHealth { get; set; }
-        public float HealthLoopTime { get; set; }
-        public float OfflineDurationMin { get; set; }
-        public float OfflineDurationMax { get; set; }
+        public int DefaultDelay { get; set; }
+        public int DefaultResidueTime { get; set; }
+        public int DamageHealth { get; set; }
+        public int HealthLoopTime { get; set; }
+        public int OfflineDurationMin { get; set; }
+        public int OfflineDurationMax { get; set; }
         public bool RemovedAfterDeath { get; set; }
-        public float HealExperience { get; set; }
-        public float RemovePrice { get; set; }
+        public int HealExperience { get; set; }
+        public int RemovePrice { get; set; }
     }
 
     public class Regeneration
@@ -637,8 +637,8 @@ namespace SPTSharp.Models.Eft.Common
 
     public class Pain
     {
-        public float TremorDelay { get; set; }
-        public float HealExperience { get; set; }
+        public int TremorDelay { get; set; }
+        public int HealExperience { get; set; }
     }
 
     public class PainKiller
@@ -737,12 +737,12 @@ namespace SPTSharp.Models.Eft.Common
 
     public class Fracture
     {
-        public float DefaultDelay { get; set; }
-        public float DefaultResidueTime { get; set; }
-        public float HealExperience { get; set; }
-        public float OfflineDurationMin { get; set; }
-        public float OfflineDurationMax { get; set; }
-        public float RemovePrice { get; set; }
+        public int DefaultDelay { get; set; }
+        public int DefaultResidueTime { get; set; }
+        public int HealExperience { get; set; }
+        public int OfflineDurationMin { get; set; }
+        public int OfflineDurationMax { get; set; }
+        public int RemovePrice { get; set; }
         public bool RemovedAfterDeath { get; set; }
         public Probability BulletHitProbability { get; set; }
         public Probability FallingProbability { get; set; }
@@ -754,16 +754,16 @@ namespace SPTSharp.Models.Eft.Common
         public float DefaultResidueTime { get; set; }
         public float DamageEnergy { get; set; }
         public float DamageHealth { get; set; }
-        public float EnergyLoopTime { get; set; }
-        public float HealthLoopTime { get; set; }
+        public int EnergyLoopTime { get; set; }
+        public int HealthLoopTime { get; set; }
         public float DamageHealthDehydrated { get; set; }
-        public float HealthLoopTimeDehydrated { get; set; }
-        public float LifeTimeDehydrated { get; set; }
-        public float EliteVitalityDuration { get; set; }
-        public float HealExperience { get; set; }
-        public float OfflineDurationMin { get; set; }
-        public float OfflineDurationMax { get; set; }
-        public float RemovePrice { get; set; }
+        public int HealthLoopTimeDehydrated { get; set; }
+        public int LifeTimeDehydrated { get; set; }
+        public int EliteVitalityDuration { get; set; }
+        public int HealExperience { get; set; }
+        public int OfflineDurationMin { get; set; }
+        public int OfflineDurationMax { get; set; }
+        public int RemovePrice { get; set; }
         public bool RemovedAfterDeath { get; set; }
         public Probability Probability { get; set; }
     }
@@ -782,16 +782,16 @@ namespace SPTSharp.Models.Eft.Common
         public float DefaultResidueTime { get; set; }
         public float DamageEnergy { get; set; }
         public float DamageHealth { get; set; }
-        public float EnergyLoopTime { get; set; }
-        public float HealthLoopTime { get; set; }
+        public int EnergyLoopTime { get; set; }
+        public int HealthLoopTime { get; set; }
         public float DamageHealthDehydrated { get; set; }
-        public float HealthLoopTimeDehydrated { get; set; }
-        public float LifeTimeDehydrated { get; set; }
-        public float EliteVitalityDuration { get; set; }
-        public float HealExperience { get; set; }
-        public float OfflineDurationMin { get; set; }
-        public float OfflineDurationMax { get; set; }
-        public float RemovePrice { get; set; }
+        public int HealthLoopTimeDehydrated { get; set; }
+        public int LifeTimeDehydrated { get; set; }
+        public int EliteVitalityDuration { get; set; }
+        public int HealExperience { get; set; }
+        public int OfflineDurationMin { get; set; }
+        public int OfflineDurationMax { get; set; }
+        public int RemovePrice { get; set; }
         public bool RemovedAfterDeath { get; set; }
         public Probability Probability { get; set; }
     }
@@ -808,8 +808,8 @@ namespace SPTSharp.Models.Eft.Common
         public float HealthPointPrice { get; set; }
         public float HydrationPointPrice { get; set; }
         public float EnergyPointPrice { get; set; }
-        public float TrialLevels { get; set; }
-        public float TrialRaids { get; set; }
+        public int TrialLevels { get; set; }
+        public int TrialRaids { get; set; }
     }
 
     public class ProfileHealthSettings
@@ -908,7 +908,7 @@ namespace SPTSharp.Models.Eft.Common
         public float balancerRemovePriceCoefficient { get; set; }
         public int balancerMinPriceCount { get; set; }
         public float balancerAveragePriceCoefficient { get; set; }
-        public float delaySinceOfferAdd { get; set; }
+        public int delaySinceOfferAdd { get; set; }
         public float uniqueBuyerTimeoutInDays { get; set; }
         public float ratingSumForIncrease { get; set; }
         public float ratingIncreaseCount { get; set; }
@@ -920,17 +920,17 @@ namespace SPTSharp.Models.Eft.Common
         public float ChangePriceCoef { get; set; }
         public bool balancerUserItemSaleCooldownEnabled { get; set; }
         public int balancerUserItemSaleCooldown { get; set; }
-        public float youSellOfferMaxStorageTimeInHour { get; set; }
-        public float yourOfferDidNotSellMaxStorageTimeInHour { get; set; }
+        public int youSellOfferMaxStorageTimeInHour { get; set; }
+        public int yourOfferDidNotSellMaxStorageTimeInHour { get; set; }
         public bool isOnlyFoundInRaidAllowed { get; set; }
-        public float sellInOnePiece { get; set; }
+        public int sellInOnePiece { get; set; }
     }
 
     public class MaxActiveOfferCount
     {
         public float from { get; set; }
         public float to { get; set; }
-        public float count { get; set; }
+        public int count { get; set; }
     }
 
     public class RarityMaxSum 
@@ -1097,18 +1097,18 @@ namespace SPTSharp.Models.Eft.Common
     public class BTRSettings
     {
         public List<string> LocationsWithBTR { get; set; }
-        public float BasePriceTaxi { get; set; }
-        public float AddPriceTaxi { get; set; }
-        public float CleanUpPrice { get; set; }
-        public float DeliveryPrice { get; set; }
+        public int BasePriceTaxi { get; set; }
+        public int AddPriceTaxi { get; set; }
+        public int CleanUpPrice { get; set; }
+        public int DeliveryPrice { get; set; }
         public float ModDeliveryCost { get; set; }
         public float BearPriceMod { get; set; }
         public float UsecPriceMod { get; set; }
         public float ScavPriceMod { get; set; }
         public float CoefficientDiscountCharisma { get; set; }
-        public float DeliveryMinPrice { get; set; }
-        public float TaxiMinPrice { get; set; }
-        public float BotCoverMinPrice { get; set; }
+        public int DeliveryMinPrice { get; set; }
+        public int TaxiMinPrice { get; set; }
+        public int BotCoverMinPrice { get; set; }
         public Dictionary<string, BtrMapConfig> MapsConfigs { get; set; }
         public float DiameterWheel { get; set; }
         public float HeightWheel { get; set; }
@@ -1285,12 +1285,12 @@ namespace SPTSharp.Models.Eft.Common
     public class Crafting
     {
         public float PointsPerCraftingCycle { get; set; }
-        public float CraftingCycleHours { get; set; }
+        public int CraftingCycleHours { get; set; }
         public float PointsPerUniqueCraftCycle { get; set; }
-        public float UniqueCraftsPerCycle { get; set; }
+        public int UniqueCraftsPerCycle { get; set; }
         public float CraftTimeReductionPerLevel { get; set; }
         public float ProductionTimeReductionPerLevel { get; set; }
-        public float EliteExtraProductions { get; set; }
+        public int EliteExtraProductions { get; set; }
         public float CraftingPointsToInteligence { get; set; }
     }
 
@@ -1500,7 +1500,7 @@ namespace SPTSharp.Models.Eft.Common
     public class EliteBonusSettings
     {
         public float FenceStandingLossDiscount { get; set; }
-        public float RepeatableQuestExtraCount { get; set; }
+        public int RepeatableQuestExtraCount { get; set; }
         public float ScavCaseDiscount { get; set; }
     }
 
@@ -1571,7 +1571,7 @@ namespace SPTSharp.Models.Eft.Common
         public float MalfRepairOneHandBrokenMult { get; set; }
         public float MalfRepairTwoHandsBrokenMult { get; set; }
         public bool AllowMalfForBots { get; set; }
-        public float ShowGlowAttemptsCount { get; set; }
+        public int ShowGlowAttemptsCount { get; set; }
         public float OutToIdleSpeedMultForPistol { get; set; }
         public float IdleToOutSpeedMultOnMalf { get; set; }
         public float TimeToQuickdrawPistol { get; set; }
@@ -1679,7 +1679,7 @@ namespace SPTSharp.Models.Eft.Common
         public Xyz TiltStartSideBackSpeed { get; set; }
         public Xyz TiltMaxSideBackSpeed { get; set; }
         public Xyz TiltAcceleration { get; set; }
-        public float AverageRotationFrameSpan { get; set; }
+        public int AverageRotationFrameSpan { get; set; }
         public Xyz SprintSpeedInertiaCurveMin { get; set; }
         public Xyz SprintSpeedInertiaCurveMax { get; set; }
         public Xyz SprintBrakeInertia { get; set; }
@@ -1708,7 +1708,7 @@ namespace SPTSharp.Models.Eft.Common
         public ItemEnhancementSettings ItemEnhancementSettings { get; set; }
         public int MinimumLevelToApplyBuff { get; set; }
         public RepairStrategies RepairStrategies { get; set; }
-        public float armorClassDivisor { get; set; }
+        public int armorClassDivisor { get; set; }
         public float durabilityPointCostArmor { get; set; }
         public float durabilityPointCostGuns { get; set; }
     }
