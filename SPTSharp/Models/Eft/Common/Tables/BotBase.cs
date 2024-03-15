@@ -6,6 +6,7 @@ using System.Data;
 
 namespace SPTSharp.Models.Eft.Common.Tables
 {
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class BotBase : ICloneable
     {
         public object Clone()
@@ -61,25 +62,26 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public Dictionary<string, TaskConditionCounter> TaskConditionCounters { get; set; }
         public List<InsuredItem> InsuredItems { get; set; }
         public Hideout Hideout { get; set; }
-        public QuestStatus[] Quests { get; set; }
+        public List<QuestStatus> Quests { get; set; }
         public Dictionary<string, TraderInfo> TradersInfo { get; set; }
         public UnlockedInfo UnlockedInfo { get; set; }
         public RagfairInfo RagfairInfo { get; set; }
 
         /** Achievement id and timestamp */
         public Dictionary<string, int> Achievements { get; set; }
-        public PmcDataRepeatableQuest[] RepeatableQuests { get; set; }
-        public Bonus[] Bonuses { get; set; }
+        public List<PmcDataRepeatableQuest> RepeatableQuests { get; set; }
+        public List<Bonus> Bonuses { get; set; }
         public Notes Notes { get; set; }
         public Dictionary<string, int> CarExtractCounts { get; set; }
         public Dictionary<string, int> CoopExtractCounts { get; set; }
         public SurvivorClass SurvivorClass { get; set; }
-        public string[] WishList { get; set; }
+        public List<string> WishList { get; set; }
 
         /** SPT specific property used during bot generation in raid */
         public bool? sptIsPmc { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class TaskConditionCounter
     {
         public string id { get; set; }
@@ -90,11 +92,13 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public string sourceId { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class UnlockedInfo
     {
         public List<string> unlockedProductionRecipe { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Info
     {
         public string EntryPoint { get; set; }
@@ -126,6 +130,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
 
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Settings
     {
         public string BotDifficulty { get; set; }
@@ -135,6 +140,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public int StandingForKill { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Ban
     {
         public BanType type { get; set; }
@@ -153,6 +159,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         CHANGE_NICKNAME = 6
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Customization
     {
         public string Head { get; set; }
@@ -161,6 +168,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public string Hands { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Health
     {
         public CurrentMax Hydration { get; set; }
@@ -170,6 +178,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public long UpdateTime { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class BodyPartsHealth
     {
         public BodyPartHealth Head { get; set; }
@@ -181,23 +190,27 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public BodyPartHealth RightLeg { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class BodyPartHealth
     {
         public CurrentMax Health { get; set; }
         public Dictionary<string, BodyPartEffectProperties>? Effects { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class BodyPartEffectProperties
     {
         public int Time { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class CurrentMax
     {
         public float Current { get; set; }
         public float Maximum { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Inventory
     {
         public List<Item> items { get; set; }
@@ -212,6 +225,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public string[] favoriteItems { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class BaseJsonSkills
     {
         public Dictionary<string, Common> Common { get; set; }
@@ -219,13 +233,15 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public int points { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Skills
     {
-        public Common[] Common { get; set; }
-        public Mastering[] Mastering { get; set; }
+        public List<Common> Common { get; set; }
+        public List<Mastering> Mastering { get; set; }
         public int Points { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class BaseSkill
     {
         public string Id { get; set; }
@@ -234,22 +250,26 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public int? min { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Common : BaseSkill
     {
         public float? PointsEarnedDuringSession { get; set; }
         public int? LastAccess { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Mastering : BaseSkill
     {
         // Intentionally empty
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Stats
     {
         public EftStats Eft { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class EftStats
     {
         public List<string> CarriedQuestItems { get; set; }
@@ -270,6 +290,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public string? SurvivorClass { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class DroppedItem
     {
         public string QuestId { get; set; }
@@ -277,12 +298,14 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public string ZoneId { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class FoundInRaidItem
     {
         public string QuestId { get; set; }
         public string ItemId { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Victim
     {
         public string AccountId { get; set; }
@@ -297,22 +320,26 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public string Role { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class SessionCounters
     {
         public List<CounterKeyValue> Items { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class OverallCounters
     {
         public List<CounterKeyValue> Items { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class CounterKeyValue
     {
         public string[] Key { get; set; }
         public float Value { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Agressor
     {
         public string AccountId { get; set; }
@@ -326,6 +353,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public string Category { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class DamageHistory
     {
         public string LethalDamagePart { get; set; }
@@ -333,6 +361,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public List<BodyPartsDamageHistory> BodyParts { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class LethalDamage
     {
         public float Amount { get; set; }
@@ -343,6 +372,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public int ImpactsCount { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class BodyPartsDamageHistory
     {
         public DamageStats[] Head { get; set; }
@@ -355,6 +385,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public DamageStats[] Common { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class DamageStats
     {
         public float Amount { get; set; }
@@ -365,6 +396,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public int ImpactsCount { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class DeathCause
     {
         public string DamageType { get; set; }
@@ -373,6 +405,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public string WeaponId { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class LastPlayerState
     {
         public LastPlayerStateInfo Info { get; set; }
@@ -380,6 +413,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public object Equipment { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class LastPlayerStateInfo
     {
         public string Nickname { get; set; }
@@ -388,6 +422,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public EMemberCategory MemberCategory { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class BackendCounter
     {
         public string id { get; set; }
@@ -395,6 +430,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public int number { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class InsuredItem
     {
         // Trader Id item was insured by
@@ -402,6 +438,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public string itemId { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Hideout
     {
         public Dictionary<string, Productive> Production { get; set; }
@@ -411,15 +448,17 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public int sptUpdateLastRunTimestamp { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class HideoutImprovement
     {
         public bool completed { get; set; }
         public int improveCompleteTimestamp { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Productive
     {
-        public Product[] Products { get; set; }
+        public List<Product> Products { get; set; }
         
         // Seconds passed of production
         public int? Progress { get; set; }
@@ -431,7 +470,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
 
         // Seconds needed to fully craft
         public int? ProductiveTime { get; set; }
-        public string[]? GivenItemsInStart { get; set; }
+        public List<string>? GivenItemsInStart { get; set; }
         public bool? Interrupted { get; set; }
 
         // Used in hideout production.json
@@ -448,9 +487,10 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public bool? sptIsContinuous { get; set; }
 
         // Stores a list of tools used in this craft and whether they're FiR, to give back once the craft is done
-        public Item[]? sptRequiredTools { get; set; }
+        public List<Item>? sptRequiredTools { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Production : Productive
     {
         public string RecipeId { get; set; }
@@ -458,11 +498,13 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public int ProductionTime { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class ScavCase : Productive
     {
         public string RecipeId { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Product
     {
         public string _id { get; set; }
@@ -470,6 +512,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public Upd? upd { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class HideoutArea
     {
         public EHideoutAreas type { get; set; }
@@ -478,16 +521,18 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public bool passiveBonusesEnabled {  get; set; }
         public int completeTime { get; set; }
         public bool constructing { get; set; }
-        public HideoutSlot[] slots { get; set; }
+        public List<HideoutSlot> slots { get; set; }
         public string lastRecipe {  get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class HideoutSlot
     {
         public int locationIndex { get; set; }
         public HideoutItem[]? items { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class HideoutItem
     {
         public string _id { get; set; }
@@ -495,18 +540,21 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public Upd? upd { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class LastCompleted
     {
         [JsonProperty("$oid")]
         public string oid { get; set;}
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Notes
     {
         [JsonProperty("Notes")]
-        public Note[] notes { get; set; }
+        public List<Note> notes { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class CarExtractCounts
     {
         // Intentionally empty
@@ -521,16 +569,18 @@ namespace SPTSharp.Models.Eft.Common.Tables
         SURVIVOR = 4
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class QuestStatus
     {
         public string qid { get; set; }
         public int startTime { get; set; }
         public EQuestStatus status { get; set; }
         public Dictionary<string, int>? statusTimers { get; set; }
-        public string[]? completedConditions { get; set; }
+        public List<string>? completedConditions { get; set; }
         public int? availableAfter { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class TraderInfo
     {
         public int loyaltyLevel { get; set; }
@@ -541,13 +591,15 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public bool disabled { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class RagfairInfo
     {
         public float rating { get; set; }
         public bool isRatingGrowing { get; set; }
-        public RagfairOffer[] offers { get; set; }
+        public List<RagfairOffer> offers { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Bonus
     {
         public string? id { get; set; }
@@ -560,12 +612,13 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public bool? visible { get; set; }
         public int? value { get; set; }
         public string? icon { get; set; }
-        public string[]? filter { get; set; }
+        public List<string>? filter { get; set; }
 
         // EBonusSkillType string hack!
         public string? skillType { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Note
     {
         public int Time { get; set; }
