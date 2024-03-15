@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using SPTSharp.Converters;
 using SPTSharp.Models.Eft.HttpResponse;
 using System.Text.RegularExpressions;
 
@@ -33,15 +34,23 @@ namespace SPTSharp.Utils
          */
         public static string GetBody(object data, int err = 0, string errmsg = null, bool sanitize = true)
         {
+            var settings = new JsonSerializerSettings();
+            settings.Formatting = Formatting.Indented;
+
             return sanitize
-                ? JsonConvert.SerializeObject(new GetBodyResponseData<object> { err = err, errmsg = errmsg, data = data })
+                ? JsonConvert.SerializeObject(new GetBodyResponseData<object> { err = err, errmsg = errmsg, data = data }, settings)
                 : GetUnclearedBody(data, err, errmsg);
         }
 
 
         public static string GetUnclearedBody(object data, int err = 0, string errmsg = null)
         {
-            return JsonConvert.SerializeObject(new { err = err, errmsg = errmsg, data = data });
+            var settings = new JsonSerializerSettings();
+            settings.Formatting = Formatting.Indented;
+            settings.FloatFormatHandling = FloatFormatHandling.DefaultValue;
+            settings.Converters = new List<JsonConverter> { new WholeNumberFloatConverter() };
+
+            return JsonConvert.SerializeObject(new { err = err, errmsg = errmsg, data = data }, settings);
         }
 
         public static string EmptyResponse()

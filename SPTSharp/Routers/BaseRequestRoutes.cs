@@ -30,7 +30,7 @@ namespace SPTSharp.Routers
                 { "/client/game/version/validate",              GameCallbacks.Validate                      },
                 { "/client/languages",                          DataCallbacks.GetLocaleLanguages            },
                 { "/client/game/config",                        GameCallbacks.GetGameConfig                 },
-                { "/client/items",                              DataCallbacks.GetTemplateItems              }, // TODO
+                { "/client/items",                              DataCallbacks.GetTemplateItems              }, // Done? POG
                 { "/client/customization",                      DataCallbacks.GetTemplateSuits              }, // TODO
                 { "/client/globals",                            DataCallbacks.GetGlobals                    }, // TODO
                 { "/client/trading/api/traderSettings",         TraderCallbacks.GetTraderSettings           }, // Might be done?

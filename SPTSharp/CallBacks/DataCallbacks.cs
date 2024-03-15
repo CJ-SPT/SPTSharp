@@ -37,7 +37,7 @@ namespace SPTSharp.CallBacks
 
         public static void GetTemplateItems(HttpSession session, HttpRequest request, HttpResponse response, string sessionID)
         {
-            var content = HttpResponseUtil.GetUnclearedBody(new { });
+            var content = HttpResponseUtil.GetUnclearedBody(_tables.templates.items);
             BaseRequestRouter.CompressAndSend(session, request, response, content);
         }
 

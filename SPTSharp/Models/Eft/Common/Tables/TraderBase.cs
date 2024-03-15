@@ -1,6 +1,5 @@
 ﻿#pragma warning disable
 using Newtonsoft.Json;
-using SPTSharp.Converters;
 using SPTSharp.Models.Spt.Services;
 
 namespace SPTSharp.Models.Eft.Common.Tables
