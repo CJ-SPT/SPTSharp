@@ -1,6 +1,7 @@
 ﻿using SPTSharp.Helpers;
 using SPTSharp.Models.Eft.Common;
 using SPTSharp.Models.Eft.Launcher;
+using SPTSharp.Models.Eft.Profile;
 using SPTSharp.Server;
 
 namespace SPTSharp.Controllers
@@ -66,6 +67,21 @@ namespace SPTSharp.Controllers
         public List<PmcData> GetCompleteProfile(string sessionID)
         {
             return ProfileHelper.GetCompleteProfile(sessionID);
+        }
+
+        public string ValidateNickname(ValidateNicknameRequestData data, string sessionID)
+        {
+            if (data.nickname.Length < 3)
+            {
+                return "tooshort";
+            }
+
+            if (ProfileHelper.IsNicknameTaken(data, sessionID))
+            {
+                return "taken";
+            }
+
+            return "OK";
         }
     }
 }

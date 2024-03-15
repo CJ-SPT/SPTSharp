@@ -63,6 +63,46 @@ namespace SPTSharp.Helpers
         }
 
         /// <summary>
+        /// Check if a nickname is used by another profile loaded by the server
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="sessionID"></param>
+        /// <returns>True if already used</returns>
+        public static bool IsNicknameTaken(ValidateNicknameRequestData data, string sessionID)
+        {
+            foreach (var profile in _saveServer.GetProfiles())
+            {
+                if (!ProfileHasInfoProperty(profile.Value))
+                {
+                    continue;
+                }
+
+                // SessionIds don't match + nicknames do
+                if (!StringsMatch(profile.Value.info.id, sessionID) 
+                    && StringsMatch(profile.Value.characters.pmc.Info.LowerNickname.ToLower(), data.nickname.ToLower()))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static bool ProfileHasInfoProperty(AkiProfile profile)
+        {
+            if (profile?.characters?.pmc?.Info == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private static bool StringsMatch(string a, string b)
+        {
+            return a == b;
+        }
+
+        /// <summary>
         /// Get the experience for the given level
         /// </summary>
         /// <param name="level"></param>

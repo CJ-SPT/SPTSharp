@@ -36,12 +36,17 @@ namespace SPTSharp.Routers
                 { "/client/trading/api/traderSettings",         TraderCallbacks.GetTraderSettings           }, // Might be done?
                 { "/client/settings",                           DataCallbacks.GetSettings                   },
                 { "/client/game/profile/list",                  ProfileCallbacks.GetProfileData             },
+                { "/client/account/customization",              DataCallbacks.GetTemplateCharacter          },
+                { "/client/game/profile/nickname/reserved",     ProfileCallbacks.GetNicknameReserved        },
+                { "/client/game/profile/nickname/validate",     ProfileCallbacks.ValidateNickname           },
+                { "/client/game/keepalive",                     GameCallbacks.KeepAlive                     },   
             };
 
         private static readonly Dictionary<string, Action<HttpSession, HttpRequest, HttpResponse, string>> _dynamicRoutes =
             new Dictionary<string, Action<HttpSession, HttpRequest, HttpResponse, string>>
             {
                 { "/client/menu/locale/",                       DataCallbacks.GetLocaleMenu                 },
+                { "/client/locale/",                            DataCallbacks.GetLocaleGlobal               }
             };
     }
 }

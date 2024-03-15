@@ -37,10 +37,12 @@ namespace SPTSharp.Controllers
             _tables.Locales.Server = FileIOHelper.LoadLocaleData([_dataPath, "Server", "Database", "locales", "server"]);
             _tables.Locales.Menu = FileIOHelper.LoadLocaleData([_dataPath, "Server", "Database", "locales", "menu"]);
 
+            _tables.templates.character = FileIOHelper.LoadJson<List<string>>([_dataPath, "server", "database", "templates", "character.json"]);
             _tables.templates.items = FileIOHelper.LoadJson<Dictionary<string, TemplateItem>>([_dataPath, "server", "Database", "templates", "items.json"]);
 
             Logger.LogDebug($"Loaded {_tables.templates.items.Count} items");
 
+            _tables.templates.customization = FileIOHelper.LoadJson<Dictionary<string, CustomizationItem>>([_dataPath, "server", "database", "templates", "customization.json"]);
             _tables.templates.profiles = FileIOHelper.LoadJson<ProfileTemplates>([_dataPath, "Server", "Database", "templates", "profiles.json"]);
             _tables.globals = FileIOHelper.LoadJson<Globals>([_dataPath, "server", "Database", "globals.json"]);
             _tables.settings = FileIOHelper.LoadJson<SettingsBase>([_dataPath, "server", "Database", "settings.json"]);

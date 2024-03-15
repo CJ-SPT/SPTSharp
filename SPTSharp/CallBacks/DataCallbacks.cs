@@ -43,7 +43,7 @@ namespace SPTSharp.CallBacks
 
         public static void GetTemplateSuits(HttpSession session, HttpRequest request, HttpResponse response, string sessionID)
         {
-            var content = HttpResponseUtil.GetUnclearedBody(new { });
+            var content = HttpResponseUtil.GetBody(_tables.templates.customization);
             BaseRequestRouter.CompressAndSend(session, request, response, content);
         }
 
@@ -57,6 +57,26 @@ namespace SPTSharp.CallBacks
         {
             _tables.globals.time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             var content = HttpResponseUtil.GetBody(_tables.globals);
+            BaseRequestRouter.CompressAndSend(session, request, response, content);
+        }
+
+        public static void GetLocaleGlobal(HttpSession session, HttpRequest request, HttpResponse response, string sessionID)
+        {
+            var culture = LocalizationService.culture;
+            var locale = _tables.Locales.Global[culture];
+
+            if (locale == null)
+            {
+                locale = _tables.Locales.Menu["en"];
+            }
+
+            var content = HttpResponseUtil.GetUnclearedBody(locale);
+            BaseRequestRouter.CompressAndSend(session, request, response, content);
+        }
+
+        public static void GetTemplateCharacter(HttpSession session, HttpRequest request, HttpResponse response, string sessionID)
+        {
+            var content = HttpResponseUtil.GetBody(_tables.templates.character);
             BaseRequestRouter.CompressAndSend(session, request, response, content);
         }
     }

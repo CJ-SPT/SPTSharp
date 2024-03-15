@@ -58,5 +58,10 @@ namespace SPTSharp.Controllers
 
             return config;
         }
+
+        public KeepGameAliveResponse GetKeepGameAlive()
+        {
+            return new KeepGameAliveResponse { msg = "OK", utc_time = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()};
+        }
     }
 }
