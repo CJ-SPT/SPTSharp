@@ -55,5 +55,10 @@ namespace SPTSharp.CallBacks
             BaseRequestRouter.CompressAndSend(session, request, response, content);
         }
         #pragma warning restore
+
+        public static void CreateProfile(HttpSession session, HttpRequest request, HttpResponse response, string sessionID)
+        {
+
+        }
     }
 }

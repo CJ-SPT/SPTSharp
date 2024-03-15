@@ -2,13 +2,17 @@
 using SPTSharp.Models.Eft.Common;
 using SPTSharp.Models.Eft.Launcher;
 using SPTSharp.Models.Eft.Profile;
+using SPTSharp.Models.Spt.Server;
 using SPTSharp.Server;
+using SPTSharp.Services;
+using System.Data;
 
 namespace SPTSharp.Controllers
 {
     public class ProfileController
     {
         private SaveServer _saveServer => Singleton<SaveServer>.Instance;
+        private DatabaseTables _tables => Singleton<DatabaseController>.Instance.GetTables();
 
         public List<MiniProfile> GetMiniProfiles()
         {
@@ -67,6 +71,52 @@ namespace SPTSharp.Controllers
         public List<PmcData> GetCompleteProfile(string sessionID)
         {
             return ProfileHelper.GetCompleteProfile(sessionID);
+        }
+
+        public string CreateProfile(ProfileCreateRequestData data, string sessionID)
+        {
+            var account = _saveServer.GetProfile(sessionID).info;
+            var profile = data.side == "bear"
+                ? _tables.templates.profiles.ProfileSideDict[account.edition].bear
+                : _tables.templates.profiles.ProfileSideDict[account.edition].usec;
+
+            var pmcData = profile.character;
+
+            // Delete existing profile
+            DeleteProfileBySessionID(sessionID);
+
+            // PMC
+            pmcData._id = account.id;
+            pmcData.aid = account.aid;
+            pmcData.savage = account.scavId;
+            pmcData.sessionId = sessionID;
+            pmcData.Info.Nickname = data.nickname;
+            pmcData.Info.LowerNickname = data.nickname.ToLower();
+            pmcData.Info.RegistrationDate = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            pmcData.Info.Voice = _tables.templates.customization[data.voidId]._name;
+            pmcData.Stats = null; //TODO
+            pmcData.Info.NeedWipeOptions = [];
+            pmcData.Customization.Head = data.headId;
+            pmcData.Health.UpdateTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            pmcData.Quests = [];
+            pmcData.Hideout.Seed = DateTimeOffset.UtcNow.AddYears(8).ToUnixTimeSeconds(); // 8 years in future why? who knows, we saw it in live
+            pmcData.RepeatableQuests = [];
+            pmcData.CarExtractCounts = new Dictionary<string, int>();
+            pmcData.CoopExtractCounts = new Dictionary<string, int>();
+            pmcData.Achievements = new Dictionary<string, int>();
+
+            // TODO - REST
+        }
+
+        private void DeleteProfileBySessionID(string sessionID)
+        {
+            if (_saveServer.GetProfiles().ContainsKey(sessionID))
+            {
+                _saveServer.DeleteProfileBySessionId(sessionID);
+                return;
+            }
+
+            Logger.LogWarning(LocalizationService.GetText("profile-unable_to_find_profile_by_id_cannot_delete"));
         }
 
         public string ValidateNickname(ValidateNicknameRequestData data, string sessionID)

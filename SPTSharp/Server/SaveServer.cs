@@ -31,6 +31,16 @@ namespace SPTSharp.Server
             return _profiles;
         }
 
+        /// <summary>
+        /// Delete a profile by id
+        /// </summary>
+        /// <param name="sessionId"></param>
+        /// <returns>true when deleted, false when profile not found</returns>
+        public bool DeleteProfileBySessionId(string sessionId)
+        {
+            return _profiles.Remove(sessionId);
+        }
+
         // Creates a empty profile
         // Returns true if on success, false on failure.
         public bool CreateProfile(Info profileInfo)
@@ -100,8 +110,12 @@ namespace SPTSharp.Server
 
             Logger.LogError($"No profile exists in memory with sessionId {sessionID}");
         }
-        
-        // remove the profile in memory and on disk
+
+        /// <summary>
+        /// Remove a physical profile json from user/profiles
+        /// </summary>
+        /// <param name="sessionID"></param>
+        /// <returns>true if file no longer exists</returns>
         public bool RemoveProfile(string sessionID) 
         {
             var filename = $"{sessionID}.json";

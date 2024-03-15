@@ -39,7 +39,8 @@ namespace SPTSharp.Routers
                 { "/client/account/customization",              DataCallbacks.GetTemplateCharacter          },
                 { "/client/game/profile/nickname/reserved",     ProfileCallbacks.GetNicknameReserved        },
                 { "/client/game/profile/nickname/validate",     ProfileCallbacks.ValidateNickname           },
-                { "/client/game/keepalive",                     GameCallbacks.KeepAlive                     },   
+                { "/client/game/keepalive",                     GameCallbacks.KeepAlive                     },
+                { "/client/game/profile/create",                ProfileCallbacks.CreateProfile              },   
             };
 
         private static readonly Dictionary<string, Action<HttpSession, HttpRequest, HttpResponse, string>> _dynamicRoutes =

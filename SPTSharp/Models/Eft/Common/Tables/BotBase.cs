@@ -106,7 +106,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public string Voice { get; set; }
         public int Level { get; set; }
         public int Experience { get; set; }
-        public dynamic RegistrationDate { get; set; }
+        public long RegistrationDate { get; set; }
         public string GameVersion { get; set; }
         public int AcountType { get; set; }
         public EMemberCategory MemberCategory { get; set; }
@@ -166,7 +166,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public CurrentMax Energy { get; set; }
         public CurrentMax Temperature { get; set; }
         public BodyPartsHealth BodyParts { get; set; }
-        public int UpdateTime { get; set; }
+        public long UpdateTime { get; set; }
     }
 
     public class BodyPartsHealth
@@ -405,7 +405,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public Dictionary<string, Productive> Production { get; set; }
         public HideoutArea[] Areas { get; set; }
         public Dictionary<string, HideoutImprovement> Improvement { get; set; }
-        public int Seed { get; set; }
+        public long Seed { get; set; }
         public int sptUpdateLastRunTimestamp { get; set; }
     }
 
