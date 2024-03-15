@@ -33,7 +33,7 @@ namespace SPTSharp.Routers
                 { "/client/items",                              DataCallbacks.GetTemplateItems              }, // TODO
                 { "/client/customization",                      DataCallbacks.GetTemplateSuits              }, // TODO
                 { "/client/globals",                            DataCallbacks.GetGlobals                    }, // TODO
-                { "/client/trading/api/traderSettings",         TraderCallbacks.GetTraderSettings           }, // TODO
+                { "/client/trading/api/traderSettings",         TraderCallbacks.GetTraderSettings           }, // Might be done?
             };
 
         private static readonly Dictionary<string, Action<HttpSession, HttpRequest, HttpResponse, string>> _dynamicRoutes =

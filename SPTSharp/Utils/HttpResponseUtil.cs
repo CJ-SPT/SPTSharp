@@ -33,27 +33,9 @@ namespace SPTSharp.Utils
          */
         public static string GetBody(object data, int err = 0, string errmsg = null, bool sanitize = true)
         {
-            // Convert data object to JObject
-            JObject dataObject = JObject.FromObject(data);
-
-            // Construct the GetBodyResponseData<JObject> object
-            GetBodyResponseData<JObject> responseData = new GetBodyResponseData<JObject>
-            {
-                data = dataObject,
-                err = err,
-                errmsg = errmsg
-            };
-
-            // Serialize the GetBodyResponseData<JObject> object to JSON
-            string jsonResult = JsonConvert.SerializeObject(responseData);
-
-            // Optionally sanitize the JSON string
-            if (sanitize)
-            {
-                jsonResult = ClearString(jsonResult);
-            }
-
-            return jsonResult;
+            return sanitize
+                ? JsonConvert.SerializeObject(new GetBodyResponseData<object> { err = err, errmsg = errmsg, data = data })
+                : GetUnclearedBody(data, err, errmsg);
         }
 
 

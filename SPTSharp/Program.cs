@@ -3,6 +3,7 @@ using SPTSharp.Helpers;
 using SPTSharp.Loaders;
 using SPTSharp.Server;
 using System.Diagnostics;
+using System.Text;
 
 namespace SPTSharp
 {
@@ -12,6 +13,8 @@ namespace SPTSharp
         {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
+
+            Console.OutputEncoding = Encoding.UTF8;
 
             SingletonFactory();
 

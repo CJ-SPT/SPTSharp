@@ -57,36 +57,21 @@ namespace SPTSharp.Helpers
             return WatermarkUtil.GetVersionTag(true);
         }
 
-        public static AkiProfile? GetFullProfile(string sessionID)
+        public static AkiProfile GetFullProfile(string sessionID)
         {
-            if (_saveServer.GetProfile(sessionID) == null)
-            {
-                return null;
-            }
-
             return _saveServer.GetProfile(sessionID);
         }
 
-        public static PmcData? GetPmcProfile(string sessionID)
+        public static PmcData GetPmcProfile(string sessionID)
         {
             var fullProfile = GetFullProfile(sessionID);
-
-            if (fullProfile == null || fullProfile.characters.pmc == null)
-            {
-                return null;
-            }
 
             return fullProfile.characters.pmc;
         }
 
-        public static PmcData? GetScavProfile(string sessionID) 
+        public static PmcData GetScavProfile(string sessionID) 
         {
             var fullProfile = GetFullProfile(sessionID);
-
-            if (fullProfile == null || fullProfile.characters.scav == null)
-            {
-                return null;
-            }
 
             return fullProfile.characters.scav;
         }

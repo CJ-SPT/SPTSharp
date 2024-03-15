@@ -1,5 +1,6 @@
 ﻿#pragma warning disable
 using Newtonsoft.Json;
+using SPTSharp.Converters;
 using SPTSharp.Models.Spt.Services;
 
 namespace SPTSharp.Models.Eft.Common.Tables
@@ -29,7 +30,6 @@ namespace SPTSharp.Models.Eft.Common.Tables
     [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class TraderBase
     {
-        public bool refreshTraderRagfairOffers { get; set; }
         public string _id { get; set; }
         public bool availableInRaid { get; set; }
         public string avatar { get; set; }
@@ -39,22 +39,24 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public bool buyer_up { get; set; }
         public string currency { get; set; }
         public bool customization_seller { get; set; }
-        public double discount { get; set; }
-        public double discount_end { get; set; }
+        public int discount { get; set; }
+        public int discount_end { get; set; }
         public int gridHeight { get; set; }
-        public Insurance insurance { get; set; }
+        public TraderInsurance insurance { get; set; }
         public ItemBuyData items_buy { get; set; }
         public ItemBuyData items_buy_prohibited { get; set; }
         public string location { get; set; }
         public LoyaltyLevel[] loyaltyLevels { get; set; }
         public bool medic { get; set; }
         public string name { get; set; }
-        public double nextResupply { get; set; }
+        public int nextResupply { get; set; }
         public string nickname { get; set; }
         public Repair repair { get; set; }
         public string[] sell_category { get; set; }
+        public int sell_modifier_for_prohibited_items { get; set; }
         public string surname { get; set; }
         public bool unlockedByDefault { get; set; }
+        public bool refreshTraderRagfairOffers { get; set; }
     }
 
     [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
@@ -65,27 +67,29 @@ namespace SPTSharp.Models.Eft.Common.Tables
     }
 
     [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
-    public class Insurace
+    public class TraderInsurance
     {
         public bool availability { get; set; }
         public string[] excluded_category { get; set; }
-        public double max_return_hour { get; set; }
-        public double max_storage_time { get; set; }
-        public double min_payment { get; set; }
-        public double min_return_hour { get; set; }
+        public int max_return_hour { get; set; }
+        public int max_storage_time { get; set; }
+        public int min_payment { get; set; }
+        public int min_return_hour { get; set; }
     }
 
     [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class LoyaltyLevel
     {
-        public double buy_price_coef { get; set; }
-        public double exchange_price_coef { get; set; }
-        public double heal_price_coef { get; set; }
-        public double insurance_price_coef { get; set; }
-        public double minLevel { get; set; }
-        public double minSalesSum { get; set; }
-        public double minStanding { get; set; }
-        public double repair_price_coef { get; set; }
+        public int buy_price_coef { get; set; }
+        public int exchange_price_coef { get; set; }
+        public int heal_price_coef { get; set; }
+        
+        // String or float
+        public dynamic insurance_price_coef { get; set; }
+        public int minLevel { get; set; }
+        public int minSalesSum { get; set; }
+        public float minStanding { get; set; }
+        public int repair_price_coef { get; set; }
     }
 
     [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
@@ -93,10 +97,11 @@ namespace SPTSharp.Models.Eft.Common.Tables
     {
         public bool availability { get; set; }
         public string currency { get; set; }
-        public double currency_coefficient { get; set; }
+        public int currency_coefficient { get; set; }
         public string[] excluded_category { get; set; }
         public object[] excluded_id_list { get; set; } // Assuming it's a list of any type
-        public double quality { get; set; }
+        public int price_rate { get; set; }
+        public string quality { get; set; }
     }
 
     [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]

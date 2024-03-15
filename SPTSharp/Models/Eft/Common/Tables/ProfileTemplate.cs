@@ -51,11 +51,11 @@ namespace SPTSharp.Models.Eft.Common.Tables
 
     public class ProfileTraderTemplate
     {
-        public Dictionary<string, float> initialLoyaltyLevel { get; set; }
+        public Dictionary<string, int> initialLoyaltyLevel { get; set; }
         public bool? setQuestsAvailableForStart { get; set; }
         public bool? setQuestsAvailableForFinish { get; set; }
         public float initialStanding {  get; set; }
-        public float initialSalesSum { get; set; }
+        public int initialSalesSum { get; set; }
         public bool jaegerUnlocked { get; set; }
     }
 }
