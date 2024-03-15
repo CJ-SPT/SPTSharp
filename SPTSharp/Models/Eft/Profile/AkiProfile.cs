@@ -8,8 +8,25 @@ using SPTSharp.Models.Spt.Dialog;
 
 namespace SPTSharp.Models.Eft.Profile
 {
-    public class AkiProfile
+    public class AkiProfile : ICloneable
     {
+        public object Clone()
+        {
+            return new AkiProfile
+            {
+                info = this.info,
+                characters = this.characters,
+                suits = this.suits,
+                dialogues = this.dialogues,
+                aki = this.aki,
+                vitality = this.vitality,
+                inraid = this.inraid,
+                insurances = this.insurances,
+                traders = this.traders,
+                achievements = this.achievements,
+            };
+        }
+
         public Info info { get; set; }
         public Characters characters { get; set; }
 

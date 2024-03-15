@@ -1,4 +1,5 @@
 ﻿using SPTSharp.Helpers;
+using SPTSharp.Models.Eft.Common;
 using SPTSharp.Models.Eft.Launcher;
 using SPTSharp.Server;
 
@@ -60,6 +61,11 @@ namespace SPTSharp.Controllers
                     version = profile.aki.version
                 }
             };
+        }
+
+        public List<PmcData> GetCompleteProfile(string sessionID)
+        {
+            return ProfileHelper.GetCompleteProfile(sessionID);
         }
     }
 }

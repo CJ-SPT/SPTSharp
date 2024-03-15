@@ -4,11 +4,7 @@ using SPTSharp.Models.Eft.Launcher;
 using SPTSharp.Models.Eft.Profile;
 using SPTSharp.Models.Spt.Server;
 using SPTSharp.Server;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SPTSharp.Services;
 
 namespace SPTSharp.Helpers
 {
@@ -17,7 +13,60 @@ namespace SPTSharp.Helpers
         private static DatabaseTables _tables => Singleton<DatabaseController>.Instance.GetTables();
         private static SaveServer _saveServer => Singleton<SaveServer>.Instance;
 
-        // Gets the experience for a given level
+        /// <summary>
+        /// Get the pmc and scav profiles as a list by profile id
+        /// </summary>
+        /// <param name="sessionID"></param>
+        /// <returns>List of IPmcData objects</returns>
+        public static List<PmcData> GetCompleteProfile(string sessionID)
+        {
+            List<PmcData> output = new List<PmcData>();
+
+            if (IsWiped(sessionID))
+            {
+                return output;
+            }
+
+            var pmcProfile = GetPmcProfile(sessionID);
+            var scavProfile = GetScavProfile(sessionID);
+
+            if (ProfileSnapshotService.HasProfileSnapshot(sessionID))
+            {
+                return PostRaidXpWorkaroundFix(sessionID, output, pmcProfile, scavProfile);
+            }
+
+            output.Add(pmcProfile);
+            output.Add(scavProfile);
+
+            return output;
+        }
+
+        private static List<PmcData> PostRaidXpWorkaroundFix(string sessionID, List<PmcData> output, PmcData pmcProfile, PmcData scavProfile)
+        {
+            PmcData clonedPmc = (PmcData)pmcProfile.Clone();
+            PmcData clonedScav = (PmcData)scavProfile.Clone();
+
+            var profileSnapshot = ProfileSnapshotService.GetProfileSnapshot(sessionID);
+
+            clonedPmc.Info.Level = profileSnapshot.characters.pmc.Info.Level;
+            clonedPmc.Info.Experience = profileSnapshot.characters.pmc.Info.Experience;
+
+            clonedScav.Info.Level = profileSnapshot.characters.scav.Info.Level;
+            clonedScav.Info.Level = profileSnapshot.characters.scav.Info.Experience;
+
+            ProfileSnapshotService.ClearProfileSnapshot(sessionID);
+
+            output.Add(clonedPmc);
+            output.Add(clonedScav);
+
+            return output;
+        }
+
+        /// <summary>
+        /// Get the experience for the given level
+        /// </summary>
+        /// <param name="level"></param>
+        /// <returns>Number of xp points for level</returns>
         public static int GetExperience(int level)
         {
             var playerLevel = level;
@@ -38,7 +87,10 @@ namespace SPTSharp.Helpers
             return exp;
         }
 
-        // returns the max level a player can be
+        /// <summary>
+        /// Get the max level a player can be
+        /// </summary>
+        /// <returns>Max level</returns>
         public static int GetMaxLevel()
         {
             return _tables.globals.config.exp.level.exp_table.Length - 1;
@@ -57,11 +109,21 @@ namespace SPTSharp.Helpers
             return WatermarkUtil.GetVersionTag(true);
         }
 
+        /// <summary>
+        /// Get full representation of a players profile json
+        /// </summary>
+        /// <param name="sessionID"></param>
+        /// <returns>AkiProfile object</returns>
         public static AkiProfile GetFullProfile(string sessionID)
         {
             return _saveServer.GetProfile(sessionID);
         }
 
+        /// <summary>
+        /// Get a full profiles pmc-specific sub-profile
+        /// </summary>
+        /// <param name="sessionID"></param>
+        /// <returns>PmcData object</returns>
         public static PmcData GetPmcProfile(string sessionID)
         {
             var fullProfile = GetFullProfile(sessionID);
@@ -69,11 +131,26 @@ namespace SPTSharp.Helpers
             return fullProfile.characters.pmc;
         }
 
+        /// <summary>
+        /// Get a full profiles scav-specific sub-profile
+        /// </summary>
+        /// <param name="sessionID"></param>
+        /// <returns>PmcData object</returns>
         public static PmcData GetScavProfile(string sessionID) 
         {
             var fullProfile = GetFullProfile(sessionID);
 
             return fullProfile.characters.scav;
+        }
+
+        /// <summary>
+        /// is this profile flagged for data removal
+        /// </summary>
+        /// <param name="sessionID"></param>
+        /// <returns>true if profile is to be wiped of data</returns>
+        public static bool IsWiped(string sessionID)
+        {
+            return _saveServer.GetProfile(sessionID).info.wipe;
         }
     }
 }

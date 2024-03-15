@@ -14,6 +14,8 @@ namespace SPTSharp.Models.Spt.Server
         public Dictionary<string, Trader> traders = new Dictionary<string, Trader>();
         
         public Globals globals = new Globals();
+
+        public SettingsBase settings = new SettingsBase();
     }
 
     public class Templates

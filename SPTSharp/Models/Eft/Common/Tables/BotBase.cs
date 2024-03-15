@@ -6,8 +6,42 @@ using System.Data;
 
 namespace SPTSharp.Models.Eft.Common.Tables
 {
-    public class BotBase
+    public class BotBase : ICloneable
     {
+        public object Clone()
+        {
+            return new BotBase
+            {
+                _id = this._id,
+                sessionId = this.sessionId,
+                savage = this.savage,
+                Info = this.Info,
+                Customization = this.Customization,
+                Health = this.Health,
+                Inventory = this.Inventory,
+                Skills = this.Skills,
+                Stats = this.Stats,
+                Encyclopedia = this.Encyclopedia,
+                TaskConditionCounters = this.TaskConditionCounters,
+                InsuredItems = this.InsuredItems,
+                Hideout = this.Hideout,
+                Quests = this.Quests,
+                TradersInfo = this.TradersInfo,
+                UnlockedInfo = this.UnlockedInfo,
+                RagfairInfo = this.RagfairInfo,
+                Achievements = this.Achievements,
+                RepeatableQuests = this.RepeatableQuests,
+                Bonuses = this.Bonuses,
+                Notes = this.Notes,
+                CarExtractCounts = this.CarExtractCounts,
+                CoopExtractCounts = this.CoopExtractCounts,
+                SurvivorClass = this.SurvivorClass,
+                WishList = this.WishList,
+                sptIsPmc = this.sptIsPmc,
+            };
+        }
+
+
         public string _id { get; set; }
         
         // Starts as a string, but is an int when saved.

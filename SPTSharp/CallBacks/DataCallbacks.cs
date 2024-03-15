@@ -47,6 +47,12 @@ namespace SPTSharp.CallBacks
             BaseRequestRouter.CompressAndSend(session, request, response, content);
         }
 
+        public static void GetSettings(HttpSession session, HttpRequest request, HttpResponse response, string sessionID)
+        {
+            var content = HttpResponseUtil.GetBody(_tables.settings);
+            BaseRequestRouter.CompressAndSend(session, request, response, content);
+        }
+
         public static void GetGlobals(HttpSession session, HttpRequest request, HttpResponse response, string sessionID)
         {
             _tables.globals.time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();

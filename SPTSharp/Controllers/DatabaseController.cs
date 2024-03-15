@@ -43,6 +43,7 @@ namespace SPTSharp.Controllers
 
             _tables.templates.profiles = FileIOHelper.LoadJson<ProfileTemplates>([_dataPath, "Server", "Database", "templates", "profiles.json"]);
             _tables.globals = FileIOHelper.LoadJson<Globals>([_dataPath, "server", "Database", "globals.json"]);
+            _tables.settings = FileIOHelper.LoadJson<SettingsBase>([_dataPath, "server", "Database", "settings.json"]);
 
             BuildProfileDict();
             LoadImages();

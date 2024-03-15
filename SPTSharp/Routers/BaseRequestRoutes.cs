@@ -30,10 +30,12 @@ namespace SPTSharp.Routers
                 { "/client/game/version/validate",              GameCallbacks.Validate                      },
                 { "/client/languages",                          DataCallbacks.GetLocaleLanguages            },
                 { "/client/game/config",                        GameCallbacks.GetGameConfig                 },
-                { "/client/items",                              DataCallbacks.GetTemplateItems              }, // Done? POG
+                { "/client/items",                              DataCallbacks.GetTemplateItems              },
                 { "/client/customization",                      DataCallbacks.GetTemplateSuits              }, // TODO
-                { "/client/globals",                            DataCallbacks.GetGlobals                    }, // TODO
+                { "/client/globals",                            DataCallbacks.GetGlobals                    }, // Might be done?
                 { "/client/trading/api/traderSettings",         TraderCallbacks.GetTraderSettings           }, // Might be done?
+                { "/client/settings",                           DataCallbacks.GetSettings                   },
+                { "/client/game/profile/list",                  ProfileCallbacks.GetProfileData             },
             };
 
         private static readonly Dictionary<string, Action<HttpSession, HttpRequest, HttpResponse, string>> _dynamicRoutes =
