@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using Newtonsoft.Json;
+using SPTSharp.Models.Eft.Profile;
+#pragma warning disable
 namespace SPTSharp.Models.Eft.Launcher
 {
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class MiniProfile
     {
         public string username {  get; set; }
@@ -16,11 +14,6 @@ namespace SPTSharp.Models.Eft.Launcher
         public int prevexp { get; set; }
         public int nextlvl { get; set; }
         public int maxlvl { get; set; } 
-        public AkiData akiData { get; set; }
-    }
-
-    public class AkiData
-    {
-        public string version { get; set; }
+        public Aki akiData { get; set; }
     }
 }

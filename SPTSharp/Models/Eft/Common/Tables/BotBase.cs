@@ -120,9 +120,9 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public int LastTimePlayedAsSavage { get; set; }
         public Settings Settings { get; set; }
         public int NicknameChangeDate { get; set; }
-        public object[] NeedWipeOptions { get; set; }
+        public List<object> NeedWipeOptions { get; set; }
         public LastCompleted lastCompleteWipe { get; set; }
-        public Ban[] Bans { get; set; }
+        public List<Ban> Bans { get; set; }
         public bool BannedState { get; set; }
         public int BannedUntil { get; set; }
         public bool IsStreamerModeAvailable { get; set; }

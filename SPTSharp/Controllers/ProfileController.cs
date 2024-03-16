@@ -1,5 +1,6 @@
 ﻿using SPTSharp.Helpers;
 using SPTSharp.Models.Eft.Common;
+using SPTSharp.Models.Eft.Common.Tables;
 using SPTSharp.Models.Eft.Launcher;
 using SPTSharp.Models.Eft.Profile;
 using SPTSharp.Models.Spt.Server;
@@ -62,7 +63,7 @@ namespace SPTSharp.Controllers
                 prevexp = currlvl == 0 ? 0 : ProfileHelper.GetExperience(currlvl),
                 nextlvl = nextlvl,
                 maxlvl = maxLvl,
-                akiData = new AkiData
+                akiData = new Aki
                 {
                     version = profile.aki.version
                 }
@@ -96,12 +97,12 @@ namespace SPTSharp.Controllers
             pmcData.Info.RegistrationDate = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             pmcData.Info.Voice = _tables.templates.customization[data.voiceId]._name;
             pmcData.Stats = ProfileHelper.GetDefaultCounters();
-            pmcData.Info.NeedWipeOptions = [];
+            pmcData.Info.NeedWipeOptions = new List<object>();
             pmcData.Customization.Head = data.headId;
             pmcData.Health.UpdateTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-            pmcData.Quests = [];
+            pmcData.Quests = new List<QuestStatus>();
             pmcData.Hideout.Seed = DateTimeOffset.UtcNow.AddYears(8).ToUnixTimeSeconds(); // 8 years in future why? who knows, we saw it in live
-            pmcData.RepeatableQuests = [];
+            pmcData.RepeatableQuests = new List<PmcDataRepeatableQuest>();
             pmcData.CarExtractCounts = new Dictionary<string, int>();
             pmcData.CoopExtractCounts = new Dictionary<string, int>();
             pmcData.Achievements = new Dictionary<string, int>();
@@ -121,10 +122,34 @@ namespace SPTSharp.Controllers
                 info = account,
                 characters = new Characters { pmc =  pmcData, scav = new PmcData() },
                 suits = profile.suits,
-                //TODO suits
                 dialogues = profile.dialogues,
-                //aki = ProfileHelper.GetDefaultAkiDataObject(), // Fix ambiguous reference?
-                vitality = { },
+                aki = ProfileHelper.GetDefaultAkiDataObject(), // Fix ambiguous reference?
+                vitality = new Models.Eft.Profile.Vitality
+                {
+                    health = new Models.Eft.Profile.Health
+                    {
+                        Hydration = 0,
+                        Energy = 0,
+                        Temperature = 0,
+                        Head = 0,
+                        Chest = 0,
+                        Stomach = 0,
+                        LeftArm = 0,
+                        RightArm = 0,
+                        LeftLeg = 0,
+                        RightLeg = 0,
+                    },
+                    effects = new Models.Eft.Profile.Effects
+                    {
+                        Head = { },
+                        Chest = { },
+                        Stomach = { },
+                        LeftArm = { },
+                        RightArm = { },
+                        LeftLeg = { },
+                        RightLeg = { },
+                    }
+                },
                 inraid = { },
                 insurances = { },
                 //TODO insurances

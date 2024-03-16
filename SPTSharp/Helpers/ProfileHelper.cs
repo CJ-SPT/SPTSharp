@@ -137,11 +137,12 @@ namespace SPTSharp.Helpers
             return _tables.globals.config.exp.level.exp_table.Length - 1;
         }
 
-        public static AkiData GetDefaultAkiDataObject()
+        public static Aki GetDefaultAkiDataObject()
         {
-            return new AkiData
+            return new Aki
             {
                 version = GetServerVersion(),
+
             };
         }
 

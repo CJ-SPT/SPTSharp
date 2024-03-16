@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using SPTSharp.Models.Eft.Common;
 using SPTSharp.Models.Eft.Common.Tables;
+using SPTSharp.Models.Eft.Launcher;
 using SPTSharp.Models.Enums;
 using SPTSharp.Models.Spt.Dialog;
 
@@ -8,6 +9,7 @@ using SPTSharp.Models.Spt.Dialog;
 
 namespace SPTSharp.Models.Eft.Profile
 {
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class AkiProfile : ICloneable
     {
         public object Clone()
@@ -45,12 +47,14 @@ namespace SPTSharp.Models.Eft.Profile
         public Dictionary<string, int> achievements { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class TraderPurchaseData
     {
         public int count { get; set; }
         public int purchaseTimestamp { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Info
     {
         /** main profile id */
@@ -63,31 +67,36 @@ namespace SPTSharp.Models.Eft.Profile
         public string edition { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Characters
     {
         public PmcData pmc { get; set; } = new PmcData();
         public PmcData scav { get; set; } = new PmcData();
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class UserBuilds
     {
-        public WeaponBuild[] weaponBuilds { get; set; }
-        public EquipmentBuild[] equipmentBuilds { get; set; }
-        public MagazineBuild[] magazineBuilds { get; set; }
+        public List<WeaponBuild> weaponBuilds { get; set; }
+        public List<EquipmentBuild> equipmentBuilds { get; set; }
+        public List<MagazineBuild> magazineBuilds { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class UserBuild
     {
         public string Id { get; set; }
         public string Name { get; set; }
     }
-       
+
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class WeaponBuild : UserBuild
     {
         public string Root { get; set; }
-        public Item[] Items { get; set; }
+        public List<Item> Items { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class EquipmentBuild : UserBuild 
     {
         public string Root { get; set; }
@@ -95,6 +104,7 @@ namespace SPTSharp.Models.Eft.Profile
         public EEquipmentBuildType buildType { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class MagazineBuild : UserBuild 
     { 
         public string Caliber { get; set; }
@@ -103,20 +113,23 @@ namespace SPTSharp.Models.Eft.Profile
         public MagazineTemplateAmmoItem[] Items { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class MagazineTemplateAmmoItem
     {
         public string TemplateId { get; set; }
         public int Count { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class DefaultEquipmentPreset : UserBuild
     {
-        public Item[] Items { get; set; }
+        public List<Item> Items { get; set; }
         public string Root { get; set; }
         public EEquipmentBuildType BuildType { get; set; }
         public string type { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Dialogue
     {
         public int attachmentsNew { get; set; }
@@ -124,12 +137,13 @@ namespace SPTSharp.Models.Eft.Profile
         [JsonProperty("new")] // new is a keyword in c#
         public int newMessages { get; set; } 
         public EMessageType type { get; set; }
-        public UserDialogInfo[]? Users { get; set; }
+        public List<UserDialogInfo>? Users { get; set; }
         public bool pinned { get; set; }
-        public Message[] messages { get; set; }
+        public List<Message> messages { get; set; }
         public string _id { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class UserDialogInfo
     {
         public string _id { get; set; }
@@ -138,6 +152,7 @@ namespace SPTSharp.Models.Eft.Profile
         public UserDialogDetails Info { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class UserDialogDetails
     {
         public string Nickname { get; set; }
@@ -148,6 +163,7 @@ namespace SPTSharp.Models.Eft.Profile
         public string MemberCategory { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class DialogueInfo
     {
         public int attachmentsNew { get; set; }
@@ -159,6 +175,7 @@ namespace SPTSharp.Models.Eft.Profile
         public MessagePreview message { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Message
     {
         public string _id { get; set; }
@@ -174,9 +191,10 @@ namespace SPTSharp.Models.Eft.Profile
         public MessageItems? items { get; set; }
         public int? maxStorageTime {get; set; }
         public SystemData? systemData { get; set; }
-        public ProfileChangeEvent[]? profileChangeEvents { get; set; } 
+        public List<ProfileChangeEvent>? profileChangeEvents { get; set; } 
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class MessagePreview
     {
         public string uid { get; set; }
@@ -187,12 +205,14 @@ namespace SPTSharp.Models.Eft.Profile
         public SystemData? systemData { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class MessageItems
     {
         public string? stash { get; set; }
-        public Item[]? data { get; set; }
+        public List<Item>? data { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class SystemData
     {
         public string? date { get; set; }
@@ -203,6 +223,7 @@ namespace SPTSharp.Models.Eft.Profile
         public int? itemCount { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class UpdatableChatMember
     {
         public string NickName { get; set; }
@@ -215,19 +236,22 @@ namespace SPTSharp.Models.Eft.Profile
         public bool Banned { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class DateTime
     {
         public string date { get; set; }
         public string time { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Aki
     {
         public string version { get; set; }
-        public ModDetails[]? mods { get; set; }
-        public RecievedGift[] recievedGifts { get; set; }
+        public List<ModDetails>? mods { get; set; }
+        public List<RecievedGift>? recievedGifts { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class ModDetails 
     { 
         public string name { get; set; }
@@ -237,18 +261,21 @@ namespace SPTSharp.Models.Eft.Profile
         public string url { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class RecievedGift
     {
         public string giftId { get; set; }
         public int timestampAccepted { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Vitality
     {
         public Health health { get; set; } = new Health();
         public Effects effects { get; set; } = new Effects();
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Health
     {
         public float Hydration { get; set; } = 0f;
@@ -263,6 +290,7 @@ namespace SPTSharp.Models.Eft.Profile
         public int RightLeg { get; set; } = 0;
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Effects
     {
         public Head Head { get; set; }
@@ -275,36 +303,47 @@ namespace SPTSharp.Models.Eft.Profile
     }
 
     // Intentionally empty
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Head { }
+
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Chest { }
+
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Stomach { }
-    
+
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class LeftArm 
     { 
         public int? Fracture { get; set; }
     }
-    
+
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class RightArm
     {
         public int? Fracture { get; set; }
     }
-    
+
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class LeftLeg
     {
         public int? Fracture { get; set; }
     }
-    
+
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class RightLeg
     {
         public int? Fracture { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Inraid
     {
         public string location { get; set; }
         public string character { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Insurance
     {
         public int scheduledTime {  get; set; }
@@ -312,9 +351,10 @@ namespace SPTSharp.Models.Eft.Profile
         public int maxStorageTime {  get; set; }
         public SystemData systemData { get; set; }
         public EMessageType messageType { get; set; }
-        public Item[] items { get; set; }
+        public List<Item> items { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class MessageContentRagfair
     {
         public string offerId { get; set; }

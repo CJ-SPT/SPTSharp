@@ -79,48 +79,42 @@ namespace SPTSharp.Helpers
                 }
             }
 
-            // Fix duplicate Id's
-            Dictionary<string, int > dupes = new Dictionary<string, int>();
+            Dictionary<string, int> dupes = new Dictionary<string, int>();
             Dictionary<string, List<Item>> newParents = new Dictionary<string, List<Item>>();
+            Dictionary<string, string[]> oldToNewIds = new Dictionary<string, string[]>();
             Dictionary<string, Dictionary<string, int>> childrenMapping = new Dictionary<string, Dictionary<string, int>>();
-            Dictionary<string, List<string>> oldToNewIds = new Dictionary<string, List<string>>();
 
-            // Finding duplicate IDs involves scanning the item three times.
+
             // First scan - Check which ids are duplicated.
-            // Second scan - Map parents to items.
-            // Third scan - Resolve IDs.
             foreach (var item in newItemList)
             {
-                // if dupes contains this item id, increment the count.
-                if (dupes.ContainsKey(item._id))
+                if (!dupes.ContainsKey(item._id))
+                    dupes[item._id] = 1;
+                else
                     dupes[item._id]++;
-                else 
-                {
-                    // If not, add it with a count of 1.
-                    dupes.Add(item._id, 1);
-                }
             }
 
             foreach (var item in newItemList)
             {
-                // if the count of this item is more than 1.
                 if (dupes[item._id] > 1)
                 {
-                    var newId = HashUtil.GenerateHash();
+                    string newId = Guid.NewGuid().ToString(); // Using GUID as a replacement for this.hashUtil.generate()
 
-                    // If the newParents dict has no entry
-                    // Add an empty entry
                     if (!newParents.ContainsKey(item.parentId))
-                        newParents.Add(item.parentId, new List<Item>());
+                        newParents[item.parentId] = new List<Item>();
 
                     newParents[item.parentId].Add(item);
 
-                    // if the oldToNewIds dict has no entry
-                    // Add an empty entry
                     if (!oldToNewIds.ContainsKey(item._id))
-                        oldToNewIds.Add(item._id, new List<string>());
-
-                    oldToNewIds[item._id].Add(newId);
+                        oldToNewIds[item._id] = new string[] { newId };
+                    else
+                    {
+                        var ids = new List<string>(oldToNewIds[item._id])
+                        {
+                            newId
+                        };
+                        oldToNewIds[item._id] = ids.ToArray();
+                    }
                 }
             }
 
@@ -129,36 +123,27 @@ namespace SPTSharp.Helpers
                 if (dupes[item._id] > 1)
                 {
                     string oldId = item._id;
+                    string newId = oldToNewIds[oldId][0];
+                    item._id = newId;
 
-                    // Get the first newId
-                    string newId = oldToNewIds[oldId].FirstOrDefault(); 
-                    
-                    if (newId != null)
+                    if (newParents.ContainsKey(oldId) && newParents[oldId].Count > 0)
                     {
-                        oldToNewIds[oldId].RemoveAt(0); // Remove the used newId
-                        item._id = newId;
-
-                        // Extract one of the children that's also duplicated.
-                        if (newParents.ContainsKey(oldId) && newParents[oldId].Count > 0)
+                        childrenMapping[newId] = new Dictionary<string, int>();
+                        foreach (var childItem in newParents[oldId])
                         {
-                            childrenMapping[newId] = new Dictionary<string, int>();
-                            for (int childIndex = newParents[oldId].Count - 1; childIndex >= 0; childIndex--)
-                            {
-                                // Make sure we haven't already assigned another duplicate child of
-                                // same slot and location to this parent.
-                                string childId = GetChildId(newParents[oldId][childIndex]);
+                            string childId = GetChildId(childItem);
 
-                                if (!childrenMapping[newId].ContainsKey(childId))
-                                {
-                                    childrenMapping[newId][childId] = 1;
-                                    newParents[oldId][childIndex].parentId = newId;
-                                    newParents[oldId].RemoveAt(childIndex);
-                                }
+                            if (!childrenMapping[newId].ContainsKey(childId))
+                            {
+                                childrenMapping[newId][childId] = 1;
+                                childItem.parentId = newId;
+                                newParents[oldId].Remove(childItem); // Remove the child from the list
                             }
                         }
                     }
                 }
             }
+        
 
             return newItemList;
         }

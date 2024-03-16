@@ -4,6 +4,7 @@ using System.Globalization;
 
 namespace SPTSharp.Models.Eft.Common.Tables
 {
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Item : ICloneable
     {
         public object Clone()
@@ -29,6 +30,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public dynamic location { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Upd
     {
         public Buff? Buff { get; set; }
@@ -61,6 +63,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public CultistAmulet? CultistAmulet { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Buff
     {
         public string rarity { get; set; }
@@ -69,49 +72,58 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public float thresholdDurability { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Togglable
     {
         public bool On { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Map
     {
         public MapMarker[] Markers { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class MapMarker
     {
         public float X { get; set; }
         public float Y { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Tag
     {
         public float Color { get; set; }
         public string Name { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class FaceShield
     {
         public int Hits { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Repairable
     {
         public int Durability { get; set; }
         public int MaxDurability { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class RecodableComponent
     {
         public bool IsEncoded { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class MedKit
     {
         public int HpResource { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Sight
     {
         public int[] ScopesCurrentCalibPointIndexes { get; set; }
@@ -119,39 +131,46 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public int SelectedScope { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Foldable
     {
         public bool Folded { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class FireMode
     {
         [JsonProperty("FireMode")]
         public string Fire_Mode { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class FoodDrink
     {
         public int HpPercent { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Key
     {
         public int NumberOfUsages { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Resource
     {
         public int Value { get; set; }
         public int UnitsConsumed { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Light
     {
         public bool IsActive { get; set; }
         public int SelectedMode { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class DogTag
     {
         public string AccountId { get; set; }
@@ -167,6 +186,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public string WeaponName { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Location
     {
         public float x { get; set; }
@@ -180,16 +200,19 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public object? rotation { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class SideEffect
     {
         public float Value { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class RepairKit
     {
         public float Resource { get; set; }
     }
 
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class CultistAmulet
     {
         public int NumberOfUsages { get; set; }

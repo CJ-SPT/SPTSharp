@@ -65,8 +65,6 @@ namespace SPTSharp.Controllers
                 var traderId = dir.Split('\\').Last();
                 var added = _tables.traders.TryAdd(traderId, trader);
 
-                Logger.LogDebug($"Loading {traderId} : {LocalizationService.GetText($"{traderId} Nickname")}");
-
                 _tables.traders[traderId].Base = FileIOHelper.LoadJson<TraderBase>([dir, "base.json"]);
 
                 // Load assorts
@@ -110,8 +108,6 @@ namespace SPTSharp.Controllers
                     _tables.traders[traderId].traderServices = FileIOHelper.LoadJson<List<TraderServiceModel>>([servicesFile]);
                 }
             }
-
-            Logger.LogDebug(_tables.traders.Count);
         }
 
         // Builds the profile dictionary: TODO - REFACTOR
