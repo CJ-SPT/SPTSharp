@@ -114,6 +114,8 @@ namespace SPTSharp.Helpers
             var expTable = _tables.globals.config.exp.level.exp_table;
             var exp = 0;
 
+            level = Math.Clamp(level, 0, expTable.Length - 1);
+
             if (playerLevel >= expTable.Length)
             {
                 // Make sure we don't go out of bounds

@@ -23,7 +23,6 @@ namespace SPTSharp.Utils
         public static string NoBody(object data)
         {
             var settings = new JsonSerializerSettings();
-            settings.Formatting = Formatting.Indented;
             settings.FloatFormatHandling = FloatFormatHandling.DefaultValue;
             settings.Converters = new List<JsonConverter> { new WholeNumberFloatConverter() };
             settings.NullValueHandling = NullValueHandling.Ignore;
@@ -41,7 +40,6 @@ namespace SPTSharp.Utils
         public static string GetBody(object data, int err = 0, string errmsg = null, bool sanitize = true)
         {
             var settings = new JsonSerializerSettings();
-            settings.Formatting = Formatting.Indented;
             settings.FloatFormatHandling = FloatFormatHandling.DefaultValue;
             settings.Converters = new List<JsonConverter> { new WholeNumberFloatConverter() };
             settings.NullValueHandling = NullValueHandling.Ignore;

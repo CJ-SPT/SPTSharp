@@ -7,7 +7,9 @@ namespace SPTSharp.Models.Spt.Server
     {
         public DatabaseTables() { }
 
-        public LocaleBase Locales { get; set; } = new LocaleBase();
+        public BotSettings BotSettings  = new BotSettings();
+
+        public LocaleBase Locales = new LocaleBase();
 
         public Templates templates = new Templates();
 

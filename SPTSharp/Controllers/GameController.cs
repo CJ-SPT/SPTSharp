@@ -17,18 +17,8 @@ namespace SPTSharp.Controllers
         {
             var profile = ProfileHelper.GetPmcProfile(sessionId);
 
-            if (profile == null)
-            {
-                throw new NullReferenceException("GetGameConfig: Profile was null.");
-            }
-
-            var gameTime = profile?.Stats?.Eft?.OverallCounters?.Items
-                .First(t => t != null && t.Key.Contains("LifeTime") && t.Key.Contains("Pmc"))?.Value;
-
-            if (gameTime == null)
-            {
-                gameTime = 0;
-            }
+            long gameTime = profile?.Stats?.Eft?.OverallCounters?.Items
+                .FirstOrDefault(t => t != null && t.Key.Contains("LifeTime") && t.Key.Contains("Pmc"))?.Value ?? 0;
 
             DateTimeOffset now = DateTimeOffset.UtcNow;
 
@@ -39,7 +29,7 @@ namespace SPTSharp.Controllers
                 reportAvailable = false,
                 twitchEventMember = false,
                 lang = "en",
-                aid = profile?.aid ?? null,
+                aid = ProfileHelper.GetFullProfile(sessionId).info.aid,
                 taxonomy = 6,
                 activeProfileId = sessionId,
                 backend = new Backend
@@ -52,7 +42,7 @@ namespace SPTSharp.Controllers
                 },
                 useProtobuf = false,
                 utc_time = now.ToUnixTimeMilliseconds(),
-
+                totalInGame = gameTime
             };
 
 

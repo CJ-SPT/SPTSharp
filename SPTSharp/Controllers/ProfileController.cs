@@ -152,11 +152,10 @@ namespace SPTSharp.Controllers
                 },
                 inraid = { },
                 insurances = { },
-                //TODO insurances
                 achievements = { },
             };
 
-            // TODO: check and fix profile issues
+            ProfileFixerService.CheckForAndFixProfileIssues(pmcData);
             // TODO: add missing hideout bonuses
             
             _saveServer.AddProfile(details);
@@ -164,7 +163,7 @@ namespace SPTSharp.Controllers
             // TODO: Set quests available for start
             // TODO: Set quests available for finish
 
-            //ResetAllTradersInProfile(sessionID);
+            ResetAllTradersInProfile(sessionID);
 
             // TODO: Generate scav
 

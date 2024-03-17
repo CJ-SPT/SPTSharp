@@ -31,11 +31,14 @@ namespace SPTSharp.Controllers
         internal void InitDatabase()
         {
             Logger.LogInfo("Initializing database...");
-
+            
+            Logger.LogDebug("Loading locales...");
             // Locale data
             _tables.Locales.Global = FileIOHelper.LoadLocaleData([_dataPath, "Server", "Database", "locales", "global"]);
             _tables.Locales.Server = FileIOHelper.LoadLocaleData([_dataPath, "Server", "Database", "locales", "server"]);
             _tables.Locales.Menu = FileIOHelper.LoadLocaleData([_dataPath, "Server", "Database", "locales", "menu"]);
+
+            Logger.LogDebug("Loading templates...");
 
             _tables.templates.character = FileIOHelper.LoadJson<List<string>>([_dataPath, "server", "database", "templates", "character.json"]);
             _tables.templates.items = FileIOHelper.LoadJson<Dictionary<string, TemplateItem>>([_dataPath, "server", "Database", "templates", "items.json"]);
@@ -44,18 +47,43 @@ namespace SPTSharp.Controllers
 
             _tables.templates.customization = FileIOHelper.LoadJson<Dictionary<string, CustomizationItem>>([_dataPath, "server", "database", "templates", "customization.json"]);
             _tables.templates.profiles = FileIOHelper.LoadJson<ProfileTemplates>([_dataPath, "Server", "Database", "templates", "profiles.json"]);
+
+            Logger.LogDebug("Loading Globals...");
+
             _tables.globals = FileIOHelper.LoadJson<Globals>([_dataPath, "server", "Database", "globals.json"]);
             _tables.settings = FileIOHelper.LoadJson<SettingsBase>([_dataPath, "server", "Database", "settings.json"]);
 
             BuildProfileDict();
             LoadImages();
             LoadTraderData();
+            LoadBotTypes();
 
-            Logger.LogDebug("Initializing database complete...");
+        }
+
+        private void LoadBotTypes()
+        {
+            Logger.LogDebug("Loading bot types...");
+
+            var botDir = Path.Combine([_dataPath, "server", "database", "bots"]);
+
+            _tables.BotSettings.core = FileIOHelper.LoadJson<BotCore>([botDir, "core.json"]);
+            _tables.BotSettings.botBase = FileIOHelper.LoadJson<BotBase>([botDir, "core.json"]);
+            
+            foreach (var file in Directory.GetFiles(Path.Combine(botDir, "types")))
+            {
+                var fileName = Path.GetFileNameWithoutExtension(file);
+
+                var botType = FileIOHelper.LoadJson<BotType>([file]);
+                
+                _tables.BotSettings.types.Add(fileName, botType);
+            }
+
         }
         
         private void LoadTraderData()
         {
+            Logger.LogDebug("Loading trader data...");
+
             var traderDir = Path.Combine([_dataPath, "server", "database", "traders"]);
             
             // Break down trader data paths into usable segments
@@ -129,6 +157,8 @@ namespace SPTSharp.Controllers
          */
         private void LoadImages()
         {
+            Logger.LogDebug("Loading images...");
+
             var filePath = Path.Combine([FileIOHelper.dataPath, "server", "images"]);
             var directories = Directory.GetDirectories(Path.Combine([FileIOHelper.dataPath, "server", "images"]));
 

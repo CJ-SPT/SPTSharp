@@ -6,7 +6,7 @@ namespace SPTSharp.Models.Eft.Game
 {
     public class GameConfigResponse
     {
-        public int? aid { get; set; }
+        public int aid { get; set; }
         public string lang { get; set; }
         public Dictionary<string, string> languages { get; set; }
         public bool ndaFree { get; set; }
@@ -17,7 +17,7 @@ namespace SPTSharp.Models.Eft.Game
         public long utc_time { get; set; }
 
         /** Total in game time */
-        public int totalInGame {  get; set; }
+        public long totalInGame {  get; set; }
         public bool reportAvailable { get; set; }
         public bool twitchEventMember { get; set; }
     }

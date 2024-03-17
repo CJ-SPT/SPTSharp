@@ -43,7 +43,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
     public class TemplateSide
     {
         public PmcData character {  get; set; }
-        public string[] suits { get; set; }
+        public List<string> suits { get; set; }
         public Dictionary<string, Dialogue> dialogues { get; set; }
         public UserBuilds userBuilds { get; set; }
         public ProfileTraderTemplate trader {  get; set; }

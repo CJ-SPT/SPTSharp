@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SPTSharp.Converters;
 
 namespace SPTSharp.Helpers
 {
@@ -23,9 +24,12 @@ namespace SPTSharp.Helpers
 
             try
             {
+                var settings = new JsonSerializerSettings();
+                settings.NullValueHandling = NullValueHandling.Ignore;
+
                 string json = File.ReadAllText(p);
                 #pragma warning disable CS8603
-                return JsonConvert.DeserializeObject<T>(json);
+                return JsonConvert.DeserializeObject<T>(json, settings);
                 #pragma warning restore CS8603
             }
             catch (Exception ex)

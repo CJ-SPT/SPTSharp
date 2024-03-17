@@ -52,6 +52,21 @@ namespace SPTSharp.Helpers
                 ? _tables.templates.profiles.ProfileSideDict[account.info.edition].bear.trader
                 : _tables.templates.profiles.ProfileSideDict[account.info.edition].usec.trader;
 
+            // Handle BTR and ragfair as a special case
+            if (traderID == ETraders.BTR || traderID == "ragfair")
+            {
+                pmcData.TradersInfo[traderID] = new TraderInfo
+                {
+                    disabled = false,
+                    loyaltyLevel = 0,
+                    salesSum = 0,
+                    standing = 0,
+                    nextResupply = (int)DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
+                    unlocked = _tables.traders[traderID].Base.unlockedByDefault
+                };
+
+                return; 
+            }
 
             pmcData.TradersInfo[traderID] = new TraderInfo
             {
@@ -85,6 +100,9 @@ namespace SPTSharp.Helpers
             var loyalLevels = _tables.traders[traderID].Base.loyaltyLevels;
 
             pmcData.Info.Level = PlayerService.CalculateLevel(pmcData);
+
+            if (traderID == ETraders.BTR || traderID == "ragfair")
+                return;
 
             // Round standing to 2 decimal places to address floating point inaccuracies
             pmcData.TradersInfo[traderID].standing = (float)Math.Round(pmcData.TradersInfo[traderID].standing * 100, 2) / 100;

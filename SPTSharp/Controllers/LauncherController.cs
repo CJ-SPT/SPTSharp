@@ -63,6 +63,21 @@ namespace SPTSharp.Controllers
             return CreateAccount(data);
         }
 
+        public string WipeProfile(LoginRegisterData data)
+        {
+            var sessionId = Login(data);
+
+            if (sessionId != null)
+            {
+                var profile = _saveServer.GetProfile(sessionId);
+
+                profile.info.edition = data.edition;
+                profile.info.wipe = true;
+            }
+
+            return sessionId;
+        }
+
         private string CreateAccount(LoginRegisterData data)
         {
             var profileId = GenerateProfileId();

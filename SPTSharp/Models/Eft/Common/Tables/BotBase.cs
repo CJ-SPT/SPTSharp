@@ -14,6 +14,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
             return new BotBase
             {
                 _id = this._id,
+                aid = this.aid,
                 sessionId = this.sessionId,
                 savage = this.savage,
                 Info = this.Info,
@@ -56,7 +57,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public Customization Customization { get; set; }
         public Health Health { get; set; }
         public Inventory Inventory { get; set; }
-        public Skills Skills { get; set; }
+        public ProfileSkills Skills { get; set; }
         public Stats Stats { get; set; }
         public Dictionary<string, bool> Encyclopedia { get; set; }
         public Dictionary<string, TaskConditionCounter> TaskConditionCounters { get; set; }
@@ -74,7 +75,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public Notes Notes { get; set; }
         public Dictionary<string, int> CarExtractCounts { get; set; }
         public Dictionary<string, int> CoopExtractCounts { get; set; }
-        public SurvivorClass SurvivorClass { get; set; }
+        public SurvivorClass? SurvivorClass { get; set; }
         public List<string> WishList { get; set; }
 
         /** SPT specific property used during bot generation in raid */
@@ -116,7 +117,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
         public int AcountType { get; set; }
         public EMemberCategory MemberCategory { get; set; }
         public bool lockedMoveCommands { get; set; }
-        public int SavageLockTime { get; set; }
+        public long SavageLockTime { get; set; }
         public int LastTimePlayedAsSavage { get; set; }
         public Settings Settings { get; set; }
         public int NicknameChangeDate { get; set; }
@@ -234,7 +235,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
     }
 
     [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
-    public class Skills
+    public class ProfileSkills
     {
         public List<Common> Common { get; set; }
         public List<Mastering> Mastering { get; set; }
@@ -336,7 +337,7 @@ namespace SPTSharp.Models.Eft.Common.Tables
     public class CounterKeyValue
     {
         public string[] Key { get; set; }
-        public float Value { get; set; }
+        public long Value { get; set; }
     }
 
     [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]

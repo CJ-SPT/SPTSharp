@@ -26,6 +26,8 @@ namespace SPTSharp.Routers
                 { "/launcher/profile/get",                      LauncherCallbacks.GetProfile                },
                 { "/launcher/profile/info",                     LauncherCallbacks.GetProfileInfo            },
                 { "/launcher/profile/remove",                   LauncherCallbacks.RemoveProfile             },
+                { "/launcher/profile/change/wipe",              LauncherCallbacks.WipeProfile               },
+                { "/singleplayer/enableBSGlogging",             GameCallbacks.EnableBsgLogging              },
                 { "/client/game/start",                         GameCallbacks.GameStart                     },
                 { "/client/game/version/validate",              GameCallbacks.Validate                      },
                 { "/client/languages",                          DataCallbacks.GetLocaleLanguages            },

@@ -91,7 +91,6 @@ namespace SPTSharp.CallBacks
         public static void GetProfile(HttpSession session, HttpRequest request, HttpResponse response, string sessionID)
         {
             var body = HttpServerHelper.DecompressZlibToJSON(request.BodyBytes);
-
             var req = JsonConvert.DeserializeObject<LoginRequestData>(body);
 
             var content = HttpResponseUtil.NoBody(_launcherController.Find(_launcherController.Login(req)));
@@ -132,6 +131,19 @@ namespace SPTSharp.CallBacks
         public static void RemoveProfile(HttpSession session, HttpRequest request, HttpResponse response, string sessionID)
         {
             var content = HttpResponseUtil.NoBody(saveServer.RemoveProfile(sessionID));
+            BaseRequestRouter.CompressAndSend(session, request, response, content);
+        }
+
+        public static void WipeProfile(HttpSession session, HttpRequest request, HttpResponse response, string sessionID)
+        {
+            var body = HttpServerHelper.DecompressZlibToJSON(request.BodyBytes);
+            var req = JsonConvert.DeserializeObject<LoginRegisterData>(body);
+
+            var output = _launcherController.WipeProfile(req);
+            var content = output != null
+                ? "OK"
+                : "FAILED";
+
             BaseRequestRouter.CompressAndSend(session, request, response, content);
         }
     }

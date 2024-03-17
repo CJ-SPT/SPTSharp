@@ -33,12 +33,12 @@ namespace SPTSharp.Models.Eft.Profile
         public Characters characters { get; set; }
 
         /** Clothing purchases */
-        public string[] suits { get; set; }
+        public List<string> suits { get; set; }
         public Dictionary<string, Dialogue> dialogues { get; set; }
         public Aki aki { get; set; }
         public Vitality vitality { get; set; }
         public Inraid inraid { get; set; }
-        public Insurance[] insurances { get; set; }
+        public List<Insurance> insurances { get; set; }
 
         /** Assort purchases made by player since last trader refresh */
         public Dictionary<string, Dictionary<string, TraderInfo>>? traders { get; set; }

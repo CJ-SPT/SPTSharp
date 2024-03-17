@@ -4,7 +4,6 @@ using SPTSharp.Routers;
 using System.Net;
 using NetCoreServer;
 using System.Net.Sockets;
-using System.Security.AccessControl;
 
 namespace SPTSharp.Server
 {
@@ -14,12 +13,19 @@ namespace SPTSharp.Server
 
         public void StartHttpServer()
         {
-            IPAddress ipAddr = IPAddress.Parse(Singleton<ConfigController>.Instance.http.ip);
-            int port = Singleton<ConfigController>.Instance.http.port;
+            try
+            {
+                IPAddress ipAddr = IPAddress.Parse(Singleton<ConfigController>.Instance.http.ip);
+                int port = Singleton<ConfigController>.Instance.http.port;
 
-            server = new HttpCacheServer(ipAddr, port);
-            server.Start();
-            Logger.LogInfo($"Server running listening on http://{ipAddr}:{port}");
+                server = new HttpCacheServer(ipAddr, port);
+                server.Start();
+                Logger.LogInfo($"Server running listening on http://{ipAddr}:{port}");
+            }
+            catch (Exception ex)  
+            {
+                Logger.LogException(ex);
+            }      
         }
 
         public void RestartHttpServer()

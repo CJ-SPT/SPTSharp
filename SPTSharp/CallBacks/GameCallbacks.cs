@@ -47,5 +47,11 @@ namespace SPTSharp.CallBacks
             var content = HttpResponseUtil.GetBody(_controller.GetKeepGameAlive());
             BaseRequestRouter.CompressAndSend(session, request, response, content);
         }
+
+        public static void EnableBsgLogging(HttpSession session, HttpRequest request, HttpResponse response, string sessionID)
+        {
+            var content = HttpResponseUtil.GetBody(Singleton<ConfigController>.Instance.core);
+            BaseRequestRouter.CompressAndSend(session, request, response, content);
+        }
     }
 }
